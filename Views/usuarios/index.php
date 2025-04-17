@@ -42,7 +42,7 @@
                 <button class="close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
-            <form id = "formulario">
+            <form id = "formulario" autocomplete="off">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
