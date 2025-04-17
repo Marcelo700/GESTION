@@ -9,7 +9,7 @@
             </div>
         </div>
     </div class="col-md-12">
-    <button class="btn btn-outline-primary mb-3" type="button" id ="btnNuevo">Nuevo</button>
+    <button class="btn btn-outline-primary mb-3" type="button" id="btnNuevo">Nuevo</button>
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
@@ -38,43 +38,107 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="title">Title</h5>
-                <button class="close" data-bs-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title" id="title"></h5>
+                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
-            <form id = "formulario" autocomplete="off">
+            <form id="formulario" autocomplete="off">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
                             <label for="nombre">Nombre</label>
                             <div class="input-group">
-                                <span class="input-group-text"></span>
+                                <span class="input-group-text">
+                                    <i span class="material-icons">
+                                        list
+                                    </i>
+                                </span>
                                 <input class="form-control" type="text" id="nombre" name="nombre" placeholder="Nombre">
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="apellido">Apellido</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"></span>
-                                    <input class="form-control" type="text" id="apellido" name="apellido" placeholder="Apellido">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="correo">Correo</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"></span>
-                                        <input class="form-control" type="text" id="correo" name="correo" placeholder="Correo">
-                                    </div>
-                                </div>
+                        <div class="col-md-6">
+                            <label for="apellido">Apellido</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i span class="material-icons">
+                                        list
+                                    </i>
+                                </span>
+                                <input class="form-control" type="text" id="apellido" name="apellido" placeholder="Apellido">
                             </div>
                         </div>
-                        <div class="modal-footer">
-                        <button class="btn btn-outline-primary" type="button">Registrar</button>
-                        <button class="btn btn-outline-danger" type="button" data-bs-dismiss="modal">Cancelar</button>
-
+                        <div class="col-md-6">
+                            <label for="correo">Correo</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i span class="material-icons">
+                                        email
+                                    </i>
+                                </span>
+                                <input class="form-control" type="text" id="correo" name="correo" placeholder="Correo">
+                            </div>
                         </div>
+                        <div class="col-md-6">
+                            <label for="telefono">Telefono</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i span class="material-icons">
+                                        phone
+                                    </i>
+                                </span>
+                                <input class="form-control" type="text" id="telefono" name="telefono" placeholder="Telefono">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="direccion">Direccion</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i span class="material-icons">
+                                        location_on
+                                    </i>
+                                </span>
+                                <input class="form-control" type="text" id="direccion" name="direccion" placeholder="Direccion">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="clave">Clave</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i span class="material-icons">
+                                        lock
+                                    </i>
+                                </span>
+                                <input class="form-control" type="password" id="clave" name="clave" placeholder="Contraseña">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="rol">Rol</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i span class="material-icons">
+                                        person
+                                    </i>
+                                </span>
+                                <select name="rol" id="rol" class="form-control">
+                                    <option value="1">ADMINISTRADOR</option>
+                                    <option value="2">USUARIO</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-primary" type="submit">
+                        <i span class="material-icons">
+                            save
+                        </i> Registrar
+                    </button>
+                    <button class="btn btn-outline-danger" type="button" data-bs-dismiss="modal">
+                        <i span class="material-icons">
+                            cancel
+                        </i> Cancelar 
+                    </button>
+                </div>
             </form>
         </div>
     </div>
