@@ -64,18 +64,18 @@
                                         list
                                     </i>
                                 </span>
-                                <input class="form-control" type="text" id="apellido" name="apellido" placeholder="Apellido">
+                                <input class="form-control" type="text" id="apellido" name="apellido" placeholder="Apellido"autocomplete="nope">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <label for="correo">Correo</label>
                             <div class="input-group">
                                 <span class="input-group-text">
-                                    <i span class="material-icons">
+                                    <i span class="material-icons"> 
                                         email
                                     </i>
                                 </span>
-                                <input class="form-control" type="text" id="correo" name="correo" placeholder="Correo">
+                                <input class="form-control" type="text" id="correo" name="correo" placeholder="Correo" autocomplete="nope">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -86,7 +86,7 @@
                                         phone
                                     </i>
                                 </span>
-                                <input class="form-control" type="text" id="telefono" name="telefono" placeholder="Telefono">
+                                <input class="form-control" type="text" id="telefono" name="telefono" placeholder="Telefono" autocomplete="nope">
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -97,7 +97,7 @@
                                         location_on
                                     </i>
                                 </span>
-                                <input class="form-control" type="text" id="direccion" name="direccion" placeholder="Direccion">
+                                <input class="form-control" type="text" id="direccion" name="direccion" placeholder="Direccion"autocomplete="nope">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -108,7 +108,7 @@
                                         lock
                                     </i>
                                 </span>
-                                <input class="form-control" type="password" id="clave" name="clave" placeholder="Contraseña">
+                                <input class="form-control" type="password" id="clave" name="clave" placeholder="Contraseña" autocomplete="nope">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -136,7 +136,7 @@
                     <button class="btn btn-outline-danger" type="button" data-bs-dismiss="modal">
                         <i span class="material-icons">
                             cancel
-                        </i> Cancelar 
+                        </i> Cancelar
                     </button>
                 </div>
             </form>

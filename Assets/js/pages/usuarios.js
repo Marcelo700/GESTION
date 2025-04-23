@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
             || frm.rol.value == '') {
             alertaPerzonalizada('warning', 'TODOS LOS CAMPOS SON REQUERIDOS');
         } else {
-            const data = new FormData(fmr)
+            const data = new FormData(frm)
             const http = new XMLHttpRequest();
             const ruta = base_url + 'usuarios/guardar';
             

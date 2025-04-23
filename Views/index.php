@@ -8,7 +8,7 @@
     <meta name="description" content="Responsive Admin Dashboard Template">
     <meta name="keywords" content="admin,dashboard">
     <meta name="author" content="stacks">
-    <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  
 
     <!-- Title -->
     <title><?php echo $data['title']; ?></title>
