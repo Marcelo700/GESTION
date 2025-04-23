@@ -4,6 +4,11 @@ class UsuariosModel extends Query{
     {
         parent::__construct();
     }
+    public function getVerificar($item, $nombre) 
+    {
+        $sql = "SELECT id FROM usuarios WHERE $item = '$nombre'";
+        return $this->select($sql);
+    }
     public function guardar($nombre, $apellido, $correo, $telefono, $direccion, $clave, $rol)
     {
         $sql = "INSERT INTO usuarios (nombre, apellido, correo, telefono, direccion, clave, rol) VALUES (?,?,?,?,?,?,?)";

@@ -17,15 +17,15 @@ document.addEventListener('DOMContentLoaded', function () {
     //registrar usuario 
     frm.addEventListener('submit', function (e) {
         e.preventDefault();
-        if (frm.nombre.value == '' || frm.apellido.value == ''
-            || frm.correo.value == '' || frm.telefono.value == ''
-            || frm.direccion.value == '' || frm.clave.value == ''
-            || frm.rol.value == '') {
-            alertaPerzonalizada('warning', 'TODOS LOS CAMPOS SON REQUERIDOS');
-        } else {
+        //if (frm.nombre.value == '' || frm.apellido.value == ''
+            //|| frm.correo.value == '' || frm.telefono.value == ''
+            //|| frm.direccion.value == '' || frm.clave.value == ''
+            //|| frm.rol.value == '') {
+            //alertaPerzonalizada('warning', 'TODOS LOS CAMPOS SON REQUERIDOS');
+        //} else {
             const data = new FormData(frm)
             const http = new XMLHttpRequest();
-            const ruta = base_url + 'usuarios/guardar';
+            const url = base_url + 'usuarios/guardar';
             
             http.open("POST", url, true);
 
@@ -37,13 +37,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     const res = JSON.parse (this.responseText);
                     alertaPerzonalizada(res.tipo, res.mensaje);
+                    if (res.tipo == 'success') {
+                        frm.reset();
+                        myModal.hide()
+                    } else {
+                        
+                    }
 
                 }
 
             };
 
 
-        }
+       // }
 
     })
 })
