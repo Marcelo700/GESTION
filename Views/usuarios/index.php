@@ -13,7 +13,7 @@
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped table-hover" style="width:100%">
+                <table class="table table-striped table-hover" style="width:100%" id="tblUsuarios">
                     <thead>
                         <tr>
                             <th></th>
@@ -53,7 +53,7 @@
                                         list
                                     </i>
                                 </span>
-                                <input class="form-control" type="text" id="nombre" name="nombre" placeholder="Nombre">
+                                <input class="form-control" type="text" id="nombre" name="nombre" placeholder="Nombre" required>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -64,7 +64,7 @@
                                         list
                                     </i>
                                 </span>
-                                <input class="form-control" type="text" id="apellido" name="apellido" placeholder="Apellido"autocomplete="nope">
+                                <input class="form-control" type="text" id="apellido" name="apellido" placeholder="Apellido" autocomplete="nope" required>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -75,7 +75,7 @@
                                         email
                                     </i>
                                 </span>
-                                <input class="form-control" type="text" id="correo" name="correo" placeholder="Correo" autocomplete="nope">
+                                <input class="form-control" type="text" id="correo" name="correo" placeholder="Correo" autocomplete="nope" required>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -86,7 +86,7 @@
                                         phone
                                     </i>
                                 </span>
-                                <input class="form-control" type="text" id="telefono" name="telefono" placeholder="Telefono" autocomplete="nope">
+                                <input class="form-control" type="text" id="telefono" name="telefono" placeholder="Telefono" autocomplete="nope" required>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -97,7 +97,7 @@
                                         location_on
                                     </i>
                                 </span>
-                                <input class="form-control" type="text" id="direccion" name="direccion" placeholder="Direccion"autocomplete="nope">
+                                <input class="form-control" type="text" id="direccion" name="direccion" placeholder="Direccion"autocomplete="nope" required>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -108,7 +108,7 @@
                                         lock
                                     </i>
                                 </span>
-                                <input class="form-control" type="password" id="clave" name="clave" placeholder="Contraseña" autocomplete="nope">
+                                <input class="form-control" type="password" id="clave" name="clave" placeholder="Contraseña" autocomplete="nope" required>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -119,7 +119,7 @@
                                         person
                                     </i>
                                 </span>
-                                <select name="rol" id="rol" class="form-control">
+                                <select name="rol" id="rol" class="form-control" required>
                                     <option value="1">ADMINISTRADOR</option>
                                     <option value="2">USUARIO</option>
                                 </select>

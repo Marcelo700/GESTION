@@ -12,6 +12,15 @@ class Usuarios extends Controller
         $data['script'] = 'usuarios.js';
         $this->views->getView('usuarios', 'index', $data);
     }
+
+    public function listar() 
+    {
+        $data = $this->model->getUsuarios();
+        echo json_decode($data, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+
     public function guardar()
     {
         $nombre = $_POST['nombre'];
@@ -25,7 +34,7 @@ class Usuarios extends Controller
             empty($nombre) || empty($apellido) || empty($correo) || empty($telefono) ||
             empty($direccion) || empty($clave) || empty($rol)
         ) {
-            $res = array('tipo' => 'Warning', 'mensaje' => 'TODOS LOS CAMPOS SON REQUERIDOS SERVIDOR');
+            $res = array('tipo' => 'Warning', 'mensaje' => 'TODOS LOS CAMPOS SON REQUERIDOS');
         } else {
             ## comprobar si exite datos
             $verificarCorreo = $this->model->getVerificar('correo', $correo);

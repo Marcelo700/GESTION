@@ -23,6 +23,7 @@
 
     <!-- Theme Styles -->
     <link href="<?php echo BASE_URL . 'Assets/css/main.min.css'; ?>" rel="stylesheet">
+    <link href="<?php echo BASE_URL . 'Assets/plugins/DataTables/datatables.min.css'; ?>"/>
     <link href="<?php echo BASE_URL . 'Assets/css/custom.css'; ?>" rel="stylesheet">
 
     <link rel="icon" href="<?php echo BASE_URL . 'Assets/images/favicon.ico'; ?> ">
