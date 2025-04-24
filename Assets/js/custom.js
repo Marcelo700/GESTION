@@ -9,22 +9,37 @@ function alertaPerzonalizada(type, mensaje) {
     });
 }
 
-function eliminarRegistro(title, text, icono, accion, url) {
+function eliminarRegistro(title, text, accion, url, table) {
     Swal.fire({
         title: title,
         text: text,
-        icon: icono,
+        icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: accion
     }).then((result) => {
         if (result.isConfirmed) {
-            Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-            )
+            const http = new XMLHttpRequest();
+
+            http.open("GET", url, true);
+
+            http.send();
+
+            http.onreadystatechange = function () {
+
+                if (this.readyState == 4 && this.status == 200) {
+                    
+                    const res = JSON.parse(this.responseText);
+                    alertaPerzonalizada(res.tipo, res.mensaje);
+                    if (res.tipo == 'success') {
+                        table.ajax.reload();
+                    }
+
+                }
+
+            };
+
         }
     })
 }

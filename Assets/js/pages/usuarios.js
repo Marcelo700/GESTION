@@ -9,23 +9,29 @@ const modalRegistro = document.querySelector("#modalRegistro");
 
 const myModal = new bootstrap.Modal(modalRegistro);
 
+let tblUsuarios;
+
 document.addEventListener('DOMContentLoaded', function () {
     //Cargar datos con datatables
-    $('tblUsuarios').DataTable({
+    $('#tblUsuarios').DataTable({
         ajax: {
             url: base_url + 'usuarios/listar',
             dataSrc: ''
         },
         columns: [
+            { data: 'acciones' },
             { data: 'id' },
-            { data: 'id' },
-            { data: 'nombre' },
+            { data: 'nombres' },
             { data: 'correo' },
             { data: 'telefono' },
             { data: 'direccion' },
             { data: 'perfil' },
             { data: 'fecha' },
-        ]
+        ],
+        language : {
+            url : 'https://cdn.datatables.net/plug-ins/2.2.2/i18n/es-ES.json'
+        },
+        responsive: true
     });
 
     btnNuevo.addEventListener('click', function () {
@@ -70,3 +76,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     })
 })
+function eliminar(id) {
+    const url = base_url + 'usuarios/delete/' + id;
+    eliminarRegistro('ESTA SEGURO DE ELIMINAR', 'EL USUARIO NO SE ELIMINARA DE FORMA PERMANENTE', 'SI ELIMINAR', url, tblUsuarios)
+    
+}
