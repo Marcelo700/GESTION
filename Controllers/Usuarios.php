@@ -19,13 +19,13 @@ class Usuarios extends Controller
         for ($i = 0; $i < count($data); $i++) {
             if ($data[$i]['id'] == 1) {
                 $data[$i]['acciones'] = 'SUPER ADMIN';
-            }else{
-            $data[$i]['acciones'] = '<div>
-                <a href="#" class="btn btn-info btn-sm">
-                    <span class="material-icons">edit</span>
+            } else {
+                $data[$i]['acciones'] = '<div>
+                <a href="#" class="btn btn-info btn-sm" onclick="editar(' . $data[$i]['id'] . ') ">
+                    editar
                 </a>
-                <a href="#" class="btn btn-danger btn-sm" onclick="eliminar('.$data[$i]['id'].')">
-                    <span class="material-icons">delete</span>
+                <a href="#" class="btn btn-danger btn-sm" onclick="eliminar(' . $data[$i]['id'] . ')">
+                    Eliminar
                 </a>
             </div>';
             }
@@ -76,14 +76,22 @@ class Usuarios extends Controller
     }
 
     public function delete($id)
-     {
+    {
         $data = $this->model->delete($id);
         if ($data == 1) {
             $res = array('tipo' => 'success', 'mensaje' => 'USUARIO DADO DE BAJA');
-        }else{
+        } else {
             $res = array('tipo' => 'Warning', 'mensaje' => 'ERROR AL ELIMINARSE');
         }
         echo json_encode($res, JSON_UNESCAPED_UNICODE);
         die();
+    }
+
+    public function editar($id) 
+    {
+        $data = $this->model->getUsuarios($id);
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        die();
+
     }
 }

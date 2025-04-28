@@ -13,7 +13,7 @@ let tblUsuarios;
 
 document.addEventListener('DOMContentLoaded', function () {
     //Cargar datos con datatables
-    $('#tblUsuarios').DataTable({
+    tblUsuarios = $('#tblUsuarios').DataTable({
         ajax: {
             url: base_url + 'usuarios/listar',
             dataSrc: ''
@@ -28,10 +28,11 @@ document.addEventListener('DOMContentLoaded', function () {
             { data: 'perfil' },
             { data: 'fecha' },
         ],
-        language : {
-            url : 'https://cdn.datatables.net/plug-ins/2.2.2/i18n/es-ES.json'
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/2.2.2/i18n/es-ES.json'
         },
-        responsive: true
+        responsive: true,
+        order: [[1, 'desc']],
     });
 
     btnNuevo.addEventListener('click', function () {
@@ -79,5 +80,26 @@ document.addEventListener('DOMContentLoaded', function () {
 function eliminar(id) {
     const url = base_url + 'usuarios/delete/' + id;
     eliminarRegistro('ESTA SEGURO DE ELIMINAR', 'EL USUARIO NO SE ELIMINARA DE FORMA PERMANENTE', 'SI ELIMINAR', url, tblUsuarios)
-    
+
+}
+
+function editar(id) {
+    const http = new XMLHttpRequest();
+
+    const url = base_url + 'usuarios/editar/' + id;
+
+    http.open("GET", url, true);
+
+    http.send();
+
+    http.onreadystatechange = function () {
+
+        if (this.readyState == 4 && this.status == 200) {
+
+            console.log(this.responseText);
+
+        }
+
+    };
+
 }
