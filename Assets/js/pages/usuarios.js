@@ -37,6 +37,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     btnNuevo.addEventListener('click', function () {
         title.textContent = 'NUEVO USUARIO';
+        frm.id_usuario.value = '';
+        frm.reset();
+        frm.clave.removeAttribute('readonly');
         myModal.show();
     })
     //registrar usuario por AJAX
@@ -97,7 +100,18 @@ function editar(id) {
         if (this.readyState == 4 && this.status == 200) {
 
             console.log(this.responseText);
-
+            const res = JSON.parse(this.responseText);
+            title.textContent = 'EDITAR USUARIO';
+            frm.id_usuario.value = res.id;
+            frm.nombre.value = res.nombre;
+            frm.apellido.value = res.apellido;
+            frm.correo.value = res.correo;
+            frm.telefono.value = res.telefono;
+            frm.direccion.value = res.direccion;
+            frm.clave.value = '00000000000';
+            frm.clave.setAttribute('readonly', 'readonly');
+            frm.rol.value = res.rol
+            myModal.show();
         }
 
     };

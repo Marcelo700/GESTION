@@ -12,12 +12,16 @@ class UsuariosModel extends Query
         return $this->selectAll($sql);
     }
 
-    public function getVerificar($item, $nombre)
+    public function getVerificar($item, $nombre, $id)
     {
-        $sql = "SELECT id FROM usuarios WHERE $item = '$nombre' AND estado = 1";
+        if ($id > 0) {
+            $sql = "SELECT id FROM usuarios WHERE $item = '$nombre' AND id !=$id AND estado = 1";
+        } else {
+            $sql = "SELECT id FROM usuarios WHERE $item = '$nombre' AND estado = 1";
+        }
         return $this->select($sql);
     }
-    public function guardar($nombre, $apellido, $correo, $telefono, $direccion, $clave, $rol)
+    public function registrar($nombre, $apellido, $correo, $telefono, $direccion, $clave, $rol)
     {
         $sql = "INSERT INTO usuarios (nombre, apellido, correo, telefono, direccion, clave, rol) VALUES (?,?,?,?,?,?,?)";
         $datos = array($nombre, $apellido, $correo, $telefono, $direccion, $clave, $rol);
@@ -33,8 +37,15 @@ class UsuariosModel extends Query
 
     public function getUsuario($id)
     {
-        $sql = "SELECT id, nombre, apellido, correo, telefono, direccion, clave, rol, perfil, fecha FROM usuarios WHERE id = $id";
+        $sql = "SELECT  id, nombre, apellido, correo, telefono, direccion, clave, rol, perfil, fecha FROM usuarios WHERE id = $id";
         return $this->select($sql);
+    }
+
+    public function modificar($nombre, $apellido, $correo, $telefono, $direccion, $rol, $id)
+    {
+        $sql = "UPDATE usuarios SET nombre=?, apellido=?, correo=?, telefono=?, direccion=?, rol=? WHERE id=?";
+        $datos = array($nombre, $apellido, $correo, $telefono, $direccion, $rol, $id);
+        return $this->save($sql, $datos);
     }
 }
 
