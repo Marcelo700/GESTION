@@ -47,8 +47,8 @@ class Usuarios extends Controller
         $rol = $_POST['rol'];
         $id_usuario = $_POST['id_usuario'];
         if (
-            empty($nombre) || empty($apellido) || empty($correo) || empty($telefono) ||
-            empty($direccion) || empty($clave) || empty($rol)
+            empty($nombre) || empty($apellido) || empty($correo) || empty($telefono) 
+            || empty($direccion) || empty($clave) || empty($rol)
         ) {
             $res = array('tipo' => 'Warning', 'mensaje' => 'TODOS LOS CAMPOS SON REQUERIDOS');
         } else {
@@ -61,7 +61,7 @@ class Usuarios extends Controller
                     if (empty($verificarTel)) {
                         $hash = password_hash($clave, PASSWORD_DEFAULT);
                         $data = $this->model->registrar($nombre, $apellido, $correo, $telefono, $direccion, $hash, $rol);
-                        if ($data == 1) {
+                        if ($data > 0) {
                             $res = array('tipo' => 'success', 'mensaje' => 'USUARIO REGISTRADO');
                         } else {
                             $res = array('tipo' => 'error', 'mensaje' => 'ERROR AL REGISTRAR');
@@ -80,8 +80,8 @@ class Usuarios extends Controller
                     $verificarTel = $this->model->getVerificar('telefono', $telefono, $id_usuario);
                     if (empty($verificarTel)) {
                         $hash = password_hash($clave, PASSWORD_DEFAULT);
-                        $data = $this->model->modificar($nombre, $apellido, $correo, $telefono, $direccion, $hash, $rol);
-                        if ($data > 0) {
+                        $data = $this->model->modificar($nombre, $apellido, $correo, $telefono, $direccion, $rol, $id_usuario);
+                        if ($data == 1) {
                             $res = array('tipo' => 'success', 'mensaje' => 'USUARIO MODIFICADO');
                         } else {
                             $res = array('tipo' => 'error', 'mensaje' => 'ERROR AL MODIFICAR');

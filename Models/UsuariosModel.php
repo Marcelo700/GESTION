@@ -15,7 +15,7 @@ class UsuariosModel extends Query
     public function getVerificar($item, $nombre, $id)
     {
         if ($id > 0) {
-            $sql = "SELECT id FROM usuarios WHERE $item = '$nombre' AND id !=$id AND estado = 1";
+            $sql = "SELECT id FROM usuarios WHERE $item = '$nombre' AND id != $id AND estado = 1";
         } else {
             $sql = "SELECT id FROM usuarios WHERE $item = '$nombre' AND estado = 1";
         }
