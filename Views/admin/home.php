@@ -8,7 +8,7 @@
                                         <h1>File Manager</h1>
                                     </div>
                                     <div class="page-description-actions">
-                                        <a href="#" class="btn btn-primary"><i class="material-icons">add</i>Upload File</a>
+                                        <a href="#" class="btn btn-primary" id="btnUpload"bt><i class="material-icons">add</i>Upload File</a>
                                     </div>
                                 </div>
                             </div>
