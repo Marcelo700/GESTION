@@ -54,15 +54,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const data = new FormData(frm)
             const http = new XMLHttpRequest();
             const url = base_url + 'usuarios/guardar';
-
             http.open("POST", url, true);
-
             http.send(data);
-
             http.onreadystatechange = function () {
-
                 if (this.readyState == 4 && this.status == 200) {
-
                     const res = JSON.parse(this.responseText);
                     alertaPerzonalizada(res.tipo, res.mensaje);
                     if (res.tipo == 'success') {
