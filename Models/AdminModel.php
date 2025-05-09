@@ -8,7 +8,7 @@ class AdminModel extends Query
 
     public function getCarpetas($id_usuario)
     {
-        $sql = "SELECT * FROM carpetas WHERE id_usuario = $id_usuario AND estado = 1";
+        $sql = "SELECT * FROM carpetas WHERE id_usuario = $id_usuario AND estado = 1 ORDER BY id DESC LIMIT 6";
         return $this->selectAll($sql);
     }
 
@@ -46,6 +46,21 @@ class AdminModel extends Query
         $sql = "UPDATE usuarios SET nombre=?, apellido=?, correo=?, telefono=?, direccion=?, rol=? WHERE id=?";
         $datos = array($nombre, $apellido, $correo, $telefono, $direccion, $rol, $id);
         return $this->save($sql, $datos);
+    }
+
+    //subir archivos
+
+    public function subirArchivos($name, $tipo, $id_carpeta)
+    {
+        $sql = "INSERT INTO archivos (nombre, tipo, id_carpeta) VALUES (?,?,?)";
+        $datos = array($name, $tipo, $id_carpeta);
+        return $this->insertar($sql, $datos);
+    }
+
+    public function getArchivos($id_usuario)
+    {
+        $sql = "SELECT a.* FROM archivos a INNER JOIN carpetas c ON a.id_carpeta = c.id WHERE c.id_usuario = $id_usuario ORDER BY a.id DESC LIMIT 10";
+        return $this->selectAll($sql);
     }
 }
 
