@@ -8,31 +8,13 @@
                 <div class="col">
                     <div class="page-description d-flex align-items-center">
                         <div class="page-description-content flex-grow-1">
-                            <h1>GESTION DE ARCHIVOS</h1>
+                            <h1>File Manager</h1>
                         </div>
                         <div class="page-description-actions">
                             <a href="#" class="btn btn-primary" id="btnUpload"><i class="material-icons">add</i>Cargar archivo</a>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <?php foreach ($data['carpetas'] as $carpeta) { ?>
-                    <div class="col-md-4">
-                        <div class="card file-manager-group">
-                            <div class="card-body d-flex align-items-center">
-                                <i class="material-icons" style="color: #<?php echo $carpeta['color']; ?>;">folder</i>
-                                <div class="file-manager-group-info flex-fill">
-                                    <a href="#" id="<?php echo $carpeta['id']; ?>" class="file-manager-group-title carpetas"><?php echo $carpeta['nombre']; ?></a>
-                                    <span class="file-manager-group-about"><?php echo $carpeta['fecha']; ?></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <?php } ?>
-            </div>
-            <div class="section-description">
-                <h1>ARCHIVOS RECIENTES</h1>
             </div>
             <div class="row">
                 <?php foreach ($data['archivos'] as $archivo) { ?>
@@ -62,8 +44,4 @@
 
 
 
-<?php 
-include_once 'Views\components\modal.php'; 
-include_once 'Views\template\footer.php';
-
-?>
+<?php include_once 'Views\template\footer.php'; ?>

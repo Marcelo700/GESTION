@@ -15,11 +15,12 @@ class Admin extends Controller
     {
         $data['title'] = 'Panel de administracion';
         $data['script'] = 'file.js';
+        $data['active'] = 'recent';
         $carpetas = $this->model->getCarpetas($this->id_usuario);
-        $data['archivos'] = $this->model->getArchivos($this->id_usuario);
+        $data['archivos'] = $this->model->getArchivosRecientes($this->id_usuario);
         for ($i = 0; $i < count($carpetas); $i++) {
             $carpetas[$i]['color'] = substr(md5($carpetas[$i]['id']), 0, 6);
-            $carpetas[$i]['fecha'] = $this->time_ago(strtotime($carpetas[$i]['fecha_create']));
+            $carpetas[$i]['fecha'] = time_ago(strtotime($carpetas[$i]['fecha_create']));
         }
         $data['carpetas'] = $carpetas;
         $this->views->getView('admin', 'home', $data);
@@ -50,12 +51,22 @@ class Admin extends Controller
 
     public function subirArchivos()
     {
+        $id_carpeta = (empty($_POST['id_carpeta'])) ? 1 : $_POST['id_carpeta'];
         $archivo = $_FILES['file'];
         $name = $archivo['name'];
         $tmp = $archivo['tmp_name'];
         $tipo = $archivo['type'];
-        $data = $this->model->subirArchivos($name, $tipo, 1);
+        $data = $this->model->subirArchivos($name, $tipo, $id_carpeta);
         if ($data > 0) {
+            $destino = 'Assets/archivos';
+            if (!file_exists($destino)) {
+                mkdir($destino);
+            }
+            $carpeta = $destino . '/' . $id_carpeta;
+            if (!file_exists($carpeta)) {
+                mkdir($carpeta);
+            }
+            move_uploaded_file($tmp, $carpeta . '/' . $name);
             $res = array('tipo' => 'success', 'mensaje' => 'ARCHIVO SUBIDO CORRECTAMENTE');
         } else {
             $res = array('tipo' => 'error', 'mensaje' => 'ERROR AL SUBIR EL ARCHIVO');
@@ -64,27 +75,11 @@ class Admin extends Controller
         die();
     }
 
-    function time_ago($fecha)
+    public function ver($id_carpeta)
     {
-        $diferencia = time() - $fecha;
-        if ($diferencia < 1) {
-            return 'Justo ahora';
-        }
-        $condicion = array(
-            12 * 30 * 24 * 60 * 60  => 'año',
-            30 * 24 * 60 * 60 => 'mes',
-            24 * 60 * 60 => 'dia',
-            60 * 60 => 'hora',
-            60 => 'minuto',
-            1 => 'segundo'
-        );
-        foreach ($condicion as $secs => $str) {
-            $d = $diferencia / $secs;
-            if ($d >= 1) {
-                //redondear
-                $t = round($d);
-                return 'hace ' . $t . ' ' . $str . ($t > 1 ? 's' : '');
-            }
-        }
+        $data['title'] = 'Listado de archivos';
+        //$data['script'] = 'file.js';
+        $data['archivos'] = $this->model->getArchivos($id_carpeta, $this->id_usuario);
+        $this->views->getView('admin', 'archivos', $data);
     }
 }

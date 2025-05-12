@@ -1,14 +1,14 @@
 <?php include_once 'Views\template\header.php'; ?>
 
 <div class="app-content">
-<?php include_once 'Views\components\menu.php'; ?>
+    <?php include_once 'Views\components\menu.php'; ?>
     <div class="content-wrapper">
         <div class="container-fluid">
             <div class="row">
                 <div class="col">
                     <div class="page-description d-flex align-items-center">
                         <div class="page-description-content flex-grow-1">
-                            <h1>GESTION DE ARCHIVOS</h1>
+                            <h1>TODAS LAS CARPETAS</h1>
                         </div>
                         <div class="page-description-actions">
                             <a href="#" class="btn btn-primary" id="btnUpload"><i class="material-icons">add</i>Cargar archivo</a>
@@ -32,7 +32,7 @@
                 <?php } ?>
             </div>
             <div class="section-description">
-                <h1>ARCHIVOS RECIENTES</h1>
+                <h1>TODOS LOS ARCHIVOS</h1>
             </div>
             <div class="row">
                 <?php foreach ($data['archivos'] as $archivo) { ?>
@@ -60,10 +60,7 @@
     </div>
 </div>
 
-
-
 <?php 
 include_once 'Views\components\modal.php'; 
 include_once 'Views\template\footer.php';
-
 ?>

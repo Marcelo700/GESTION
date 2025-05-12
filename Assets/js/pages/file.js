@@ -10,6 +10,17 @@ const frmCarpeta = document.querySelector('#frmCarpeta');
 const btnSubirArchivo = document.querySelector("#btnSubirArchivo");
 const file = document.querySelector("#file");
 
+const modalCompartir = document.querySelector("#modalCompartir");
+const myModal2 = new bootstrap.Modal(modalCompartir);
+const id_carpeta = document.querySelector('#id_carpeta');
+
+const carpetas = document.querySelectorAll('.carpetas');
+const btnSubir = document.querySelector('#btnSubir');
+
+//ver archivos
+const btnVer = document.querySelector('#btnVer');
+
+
 document.addEventListener('DOMContentLoaded', function () {
     btnUpload.addEventListener('click', function () {
         myModal.show();
@@ -56,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
     file.addEventListener('change', function (e) {
         console.log(e.target.files[0]);
         const data = new FormData()
+        data.append('id_carpeta', id_carpeta.value)
         data.append('file', e.target.files[0])
         const http = new XMLHttpRequest();
         const url = base_url + 'admin/subirarchivos';
@@ -75,6 +87,22 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
         };
+    })
+
+    carpetas.forEach(carpeta =>{
+        carpeta.addEventListener('click', function(e){
+            id_carpeta.value = e.target.id;
+            myModal2.show();
+        })
+    });
+
+    btnSubir.addEventListener('click', function () {
+        myModal2.hide();
+        file.click();
+    })
+
+    btnVer.addEventListener('click', function(){
+        window.location = base_url + 'admin/ver/' + id_carpeta.value;
     })
 
 })
