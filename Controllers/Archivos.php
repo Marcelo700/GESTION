@@ -10,11 +10,10 @@ class Archivos extends Controller
     }
     public function index()
     {
-        $data['title'] = 'Archivos';
+        $data['title'] = 'archivos';
         $data['active'] = 'todos';
-        $data['script'] = 'files.js';
+        $data['script'] = 'file.js';
         $data['archivos'] = $this->model->getArchivos($this->id_usuario);
-
         $carpetas = $this->model->getCarpetas($this->id_usuario);
         for ($i = 0; $i < count($carpetas); $i++) {
             $carpetas[$i]['color'] = substr(md5($carpetas[$i]['id']), 0, 6);

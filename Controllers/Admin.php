@@ -1,9 +1,6 @@
 <?php
 class Admin extends Controller
 {
-
-
-
     private $id_usuario;
     public function __construct()
     {
@@ -78,7 +75,7 @@ class Admin extends Controller
     public function ver($id_carpeta)
     {
         $data['title'] = 'Listado de archivos';
-        //$data['script'] = 'file.js';
+        $data['active'] = 'detail';
         $data['archivos'] = $this->model->getArchivos($id_carpeta, $this->id_usuario);
         $this->views->getView('admin', 'archivos', $data);
     }
