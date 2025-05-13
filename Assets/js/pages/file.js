@@ -20,6 +20,9 @@ const btnSubir = document.querySelector('#btnSubir');
 //ver archivos
 const btnVer = document.querySelector('#btnVer');
 
+//compartir archivos entre los trabajadores
+
+const compartir = document.querySelectorAll('.compartir');
 
 document.addEventListener('DOMContentLoaded', function () {
     btnUpload.addEventListener('click', function () {
@@ -105,4 +108,15 @@ document.addEventListener('DOMContentLoaded', function () {
         window.location = base_url + 'admin/ver/' + id_carpeta.value;
     })
 
+    //agregar click al enlace compartir
+    compartir.forEach(enlace => {
+        enlace.addEventListener('click', function(e){
+            compartirArchivo(e.target.id);
+        })
+    });
+
 })
+
+function compartirArchivo(id_archivo){
+    
+}
