@@ -1,6 +1,3 @@
-//alertaPerzonalizada('success', 'Hola mensaje de prueba de login');
-
-
 const frm = document.querySelector('#formulario');
 const correo = document.querySelector('#correo');
 const clave = document.querySelector('#clave');

@@ -23,6 +23,9 @@ const btnVer = document.querySelector('#btnVer');
 //compartir archivos entre los trabajadores
 
 const compartir = document.querySelectorAll('.compartir');
+const modalUsuarios = document.querySelector("#modalUsuarios");
+const myModalUser = new bootstrap.Modal(modalUsuarios);
+const id_archivo = document.querySelector('#id_archivo');
 
 document.addEventListener('DOMContentLoaded', function () {
     btnUpload.addEventListener('click', function () {
@@ -118,5 +121,6 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 function compartirArchivo(id_archivo){
-    
+    id_archivo.value = id_archivo;
+    myModalUser.show();
 }

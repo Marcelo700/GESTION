@@ -10,7 +10,7 @@ class Archivos extends Controller
     }
     public function index()
     {
-        $data['title'] = 'archivos';
+        $data['title'] = 'Archivos';
         $data['active'] = 'todos';
         $data['script'] = 'file.js';
         $data['archivos'] = $this->model->getArchivos($this->id_usuario);
