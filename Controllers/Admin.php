@@ -6,7 +6,14 @@ class Admin extends Controller
     {
         parent::__construct();
         session_start();
-        $this->id_usuario = $_SESSION['id'];
+        if (isset($_COOKIE['id'])) {   
+            $this->id_usuario = $_COOKIE['id'];
+            $_SESSION["nombre"] = $_COOKIE['nombre'];
+            $_SESSION["correo"] = $_COOKIE['correo'];
+        }
+        else{
+            header("Location: http://localhost/gestion/");
+        }
     }
     public function index()
     {

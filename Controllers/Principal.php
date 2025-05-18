@@ -19,6 +19,9 @@ class Principal extends Controller
         $data = $this->model->getUsuario($correo);
         if (!empty($data)) {
             if (password_verify($clave, $data['clave'])) {
+                setcookie('id', $data['id'], time() + 3600, "/");
+                setcookie('correo', $data['correo'], time() + 3600, "/");
+                setcookie('nombre', $data['nombre'], time() + 3600, "/");
                 $_SESSION['id'] = $data['id'];
                 $_SESSION['correo'] = $data['correo'];
                 $_SESSION['nombre'] = $data['nombre'];

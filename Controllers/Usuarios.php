@@ -35,7 +35,6 @@ class Usuarios extends Controller
         die();
     }
 
-
     public function guardar()
     {
         $nombre = $_POST['nombre'];
