@@ -65,17 +65,26 @@
     </div>
 </div>
 
-<div id="modalUsuarios" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
+<div id="modalUsuarios" class="modal fade" tabindex="-1" aria-labelledby="title-usuarios" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="title-usuarios"></h5>
-                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" id="id_archivo">
-            </div>
+            <form id="frmCompartir">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title-usuarios">Agregar usuarios</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" id="id_archivo" name="id_archivo">
+                    <select class="js-states form-control" id="usuarios" name="usuarios[]" multiple="multiple" style="width: 100%;">
+                    </select>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Compartir</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
