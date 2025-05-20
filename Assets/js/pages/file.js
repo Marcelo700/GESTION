@@ -162,18 +162,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.log(this.responseText);
                     const res = JSON.parse(this.responseText);
                     alertaPerzonalizada(res.tipo, res.mensaje);
-                    if (res.tipo == 'success') {
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 1500);
+                    if (res.tipo == 'success'){
+                        id_archivo.value = '';
+                        $('.js-states').val(null).trigger('change');
+                        myModalUser.hide();
                     }
-
                 }
-
             };
         }
     })
-
 })
 
 function compartirArchivo(id) {
