@@ -74,13 +74,26 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div id="container-archivos">
+                    <div id="container_archivos">
                         <input type="hidden" id="id_archivo" name="archivos[]">
                     </div>
                     <select class="js-states form-control" id="usuarios" name="usuarios[]" multiple="multiple" style="width: 100%;">
                     </select>
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tblDetalle">
+                            <thead>
+                                <tr>
+                                    <th>Archivo</th>
+                                    <th>Usuario</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-primary">Compartir</button>

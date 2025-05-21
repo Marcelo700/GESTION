@@ -72,4 +72,11 @@ class Archivos extends Controller
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
+
+    public function verDetalle($id_carpeta)
+    {
+        $data = $this->model->getArchivosCompartidos($id_carpeta);
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        die();
+    }
 }
