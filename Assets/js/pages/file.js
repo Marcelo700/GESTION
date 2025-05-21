@@ -29,6 +29,9 @@ const id_archivo = document.querySelector('#id_archivo');
 const frmCompartir = document.querySelector('#frmCompartir');
 const usuarios = document.querySelector('#usuarios');
 
+const btnCompartir = document.querySelector('#btnCompartir');
+const container_archivos = document.querySelector('#container-archivos');
+
 document.addEventListener('DOMContentLoaded', function () {
     btnUpload.addEventListener('click', function () {
         myModal.show();
@@ -149,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     frmCompartir.addEventListener('submit', function (e) {
         e.preventDefault();
-        if (id_archivo.value == '' || usuarios.value == '') {
+        if (usuarios.value == '') {
             alertaPerzonalizada('warning', 'TODOS LOS CAMPOS SON REQUERIDOS');
         } else {
             const data = new FormData(frmCompartir)
@@ -162,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.log(this.responseText);
                     const res = JSON.parse(this.responseText);
                     alertaPerzonalizada(res.tipo, res.mensaje);
-                    if (res.tipo == 'success'){
+                    if (res.tipo == 'success') {
                         id_archivo.value = '';
                         $('.js-states').val(null).trigger('change');
                         myModalUser.hide();
@@ -171,9 +174,51 @@ document.addEventListener('DOMContentLoaded', function () {
             };
         }
     })
+
+    //Compartir archivos por carpeta
+    btnCompartir.addEventListener('click', function () {
+        verArchivos();
+    })
+
 })
 
 function compartirArchivo(id) {
     id_archivo.value = id;
     myModalUser.show();
+}
+
+function verArchivos() {
+    const http = new XMLHttpRequest();
+    const url = base_url + 'archivos/verArchivos/' + id_carpeta.value;
+    http.open("GET", url, true);
+    http.send();
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            const res = JSON.parse(this.responseText);
+            let html = '';
+            if (res.length > 0) {
+                res.forEach(archivo => {
+                    html += `<div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="${archivo.id}" name="archivos[]"
+                        id="flexCheckDefault_${archivo.id}">
+                        <label class="form-check-label" for="flexCheckDefault_${archivo.id}">
+                            ${archivo.nombre}
+                        </label>
+                    </div>`;
+                });
+            } else {
+                html = `<div class="alert alert-custom alert-indicator-right indicator-warning" 
+                role="alert">
+                <div class="alert-content">
+                    <span class="alert-title">Warning!</span>
+                    <span class="alert-text">CARPETA VACIA</span>
+                </div>
+            </div>`;
+
+            }
+            container_archivos.innerHTML = html;
+            myModal2.hide();
+            myModalUser.show();
+        }
+    };
 }

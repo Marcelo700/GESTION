@@ -44,6 +44,12 @@ class archivosModel extends Query
         return $this->select($sql);
     }
 
+    public function getArchivosCarpeta($id_carpeta)
+    {
+        $sql = "SELECT * FROM archivos WHERE id_carpeta = $id_carpeta";
+        return $this->selectAll($sql);
+    }
+
 }
 
 ?>

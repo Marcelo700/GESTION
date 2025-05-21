@@ -73,9 +73,10 @@
                     <h5 class="modal-title" id="title-usuarios">Agregar usuarios</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
                 <div class="modal-body">
-                    <input type="hidden" id="id_archivo" name="id_archivo">
+                    <div id="container-archivos">
+                        <input type="hidden" id="id_archivo" name="archivos[]">
+                    </div>
                     <select class="js-states form-control" id="usuarios" name="usuarios[]" multiple="multiple" style="width: 100%;">
                     </select>
                 </div>
