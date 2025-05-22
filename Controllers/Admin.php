@@ -91,6 +91,11 @@ class Admin extends Controller
         $data['title'] = 'Archivos compartidos';
         $data['id_carpeta'] = $id_carpeta;
         $data['script'] = 'detail.js';
+        $data['carpeta'] = $this->model->getCarpeta($id_carpeta);
+        if (empty($data['carpeta'])) {
+            echo 'PAGINA NO ENCONTRADA';
+            exit;
+        }
         $this->views->getView('admin', 'detalle', $data);
     }
 
@@ -99,12 +104,12 @@ class Admin extends Controller
         $data = $this->model->getArchivosCompartidos($id_carpeta);
         for ($i = 0; $i < count($data); $i++) {
             if ($data[$i]['estado'] == 0) {
-                $data[$i]['estado'] = '<span class="badge bg-warning">Se elimina '. $data[$i]['elimina'].'</span>';
+                $data[$i]['estado'] = '<span class="badge bg-warning">Se elimina ' . $data[$i]['elimina'] . '</span>';
+                $data[$i]['acciones'] = '';
             } else {
                 $data[$i]['estado'] = '<span class="badge bg-success">Compartido</span>';
+                $data[$i]['acciones'] = '<button class="btn btn-danger btn-sm" onclick="eliminarDetalle(' . $data[$i]['id'] . ')">Eliminar</button>';
             }
-            
-            $data[$i]['acciones'] = '<button class="btn btn-danger btn-sm" onclick="eliminarDetalle(' . $data[$i]['id'] . ')">Eliminar</button>';
         }
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();

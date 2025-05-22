@@ -81,11 +81,19 @@ class Archivos extends Controller
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
+
+    public function buscarCarpeta($id)
+    {
+        $data = $this->model->getCarpeta($id);
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        die();
+    }
     //eliminar archivo compartido
     public function eliminarCompartido($id)
     {
         $fecha = date('Y-m-d H:i:s');
-        $data = $this->model->eliminarCompartido($fecha, $id);
+        $nueva = date("Y-m-d H:i:s", strtotime($fecha . '+1 month'));
+        $data = $this->model->eliminarCompartido($nueva, $id);
         if ($data == 1) {
             $res = array('tipo' => 'success', 'mensaje' => 'ARCHIVO DADO DE BAJA');
         } else {

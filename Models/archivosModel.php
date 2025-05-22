@@ -13,7 +13,7 @@ class archivosModel extends Query
         return $this->selectAll($sql);
     }
 
-     public function getCarpetas($id_usuario)
+    public function getCarpetas($id_usuario)
     {
         $sql = "SELECT * FROM carpetas WHERE id_usuario = $id_usuario AND estado = 1 ORDER BY id DESC";
         return $this->selectAll($sql);
@@ -56,6 +56,13 @@ class archivosModel extends Query
         $array = [0 , $fecha, $id];
         return $this->save($sql, $array);
     }
+
+    public function getCarpeta($id_archivo)
+    {
+        $sql = "SELECT id, id_carpeta FROM archivos WHERE id = $id_archivo";
+        return $this->select($sql);
+    }
+
 
 }
 

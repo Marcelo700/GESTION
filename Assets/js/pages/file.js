@@ -16,6 +16,10 @@ const id_carpeta = document.querySelector('#id_carpeta');
 
 const carpetas = document.querySelectorAll('.carpetas');
 const btnSubir = document.querySelector('#btnSubir');
+const content_acordeon = document.querySelector('#accordionFlushExample');
+
+// ELIMINAR ARCGIVOS RECIENTES
+const eliminar = document.querySelectorAll('.eliminar');
 
 //ver archivos
 const btnVer = document.querySelector('#btnVer');
@@ -25,7 +29,6 @@ const btnVer = document.querySelector('#btnVer');
 const compartir = document.querySelectorAll('.compartir');
 const modalUsuarios = document.querySelector("#modalUsuarios");
 const myModalUser = new bootstrap.Modal(modalUsuarios);
-const id_archivo = document.querySelector('#id_archivo');
 const frmCompartir = document.querySelector('#frmCompartir');
 const usuarios = document.querySelector('#usuarios');
 
@@ -170,7 +173,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     const res = JSON.parse(this.responseText);
                     alertaPerzonalizada(res.tipo, res.mensaje);
                     if (res.tipo == 'success') {
-                        id_archivo.value = '';
                         $('.js-states').val(null).trigger('change');
                         myModalUser.hide();
                     }
@@ -185,16 +187,39 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     //Ver detalle compartido
-    btnverDetalle.addEventListener('click', function(){
+    btnverDetalle.addEventListener('click', function () {
         window.location = base_url + 'admin/verdetalle/' + id_carpeta.value;
     })
+
+    //eliminar archivo reciente
+
+    eliminar.forEach(enlace => {
+        enlace.addEventListener('click', function (e) {
+            alert(e.target.getAttribute('data-id'))
+            // const url = base_url + 'archivos/eliminarCompartido/' + id;
+            // eliminarRegistro('ESTA SEGURO DE ELIMINAR', 'EL ARCHIVO COMPARTIDO SE ELIMINARA DE FORMA PERMANENTE EN 30 DIAS', 'SI ELIMINAR', url, tbl)
+        })
+    });
+
 
 
 })
 
 function compartirArchivo(id) {
-    id_archivo.value = id;
-    myModalUser.show();
+    const http = new XMLHttpRequest();
+    const url = base_url + 'archivos/buscarCarpeta/' + id;
+    http.open("GET", url, true);
+    http.send();
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            const res = JSON.parse(this.responseText);
+            console.log(this.responseText)
+            id_carpeta.value = res.id_carpeta;
+            content_acordeon.classList.add('d-none');
+            container_archivos.innerHTML = `<input type="hidden" value="${res.id}" name="archivos[]">`
+            myModalUser.show();
+        }
+    };
 }
 
 function verArchivos() {
@@ -207,6 +232,7 @@ function verArchivos() {
             const res = JSON.parse(this.responseText);
             let html = '';
             if (res.length > 0) {
+                content_acordeon.classList.remove('d-none');
                 res.forEach(archivo => {
                     html += `<div class="form-check">
                         <input class="form-check-input" type="checkbox" value="${archivo.id}" 

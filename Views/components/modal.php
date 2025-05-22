@@ -93,7 +93,7 @@
                             <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
                                     <div id="container_archivos">
-                                        <input type="hidden" id="id_archivo" name="archivos[]">
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -103,8 +103,6 @@
                     <div class="text-center">
                         <a class="btn btn-outline-info" href="#" id="btnverDetalle">VER DETALLES</a>
                     </div>
-
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>

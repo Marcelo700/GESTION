@@ -76,6 +76,12 @@ class AdminModel extends Query
         = $id_carpeta";
         return $this->selectAll($sql);
     }
+
+    public function getCarpeta($id)
+    {
+        $sql = "SELECT * FROM carpetas WHERE id = $id";
+        return $this->select($sql);
+    }
 }
 
 ?>
