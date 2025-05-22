@@ -31,7 +31,6 @@ const usuarios = document.querySelector('#usuarios');
 
 const btnCompartir = document.querySelector('#btnCompartir');
 const container_archivos = document.querySelector('#container_archivos');
-const tblDetalle = document.querySelector('#tblDetalle tbody');
 
 document.addEventListener('DOMContentLoaded', function () {
     btnUpload.addEventListener('click', function () {
@@ -181,6 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
         verArchivos();
     })
 
+
 })
 
 function compartirArchivo(id) {
@@ -225,31 +225,24 @@ function verArchivos() {
     };
 }
 
-function cargarDetalle(id_carpeta){
-    const http = new XMLHttpRequest();
-    const url = base_url + 'archivos/verDetalle/' + id_carpeta;
-    http.open("GET", url, true);
-    http.send();
-    http.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            const res = JSON.parse(this.responseText);
-            let html = '';
-            if (res.length > 0) {
-                res.forEach(archivo => {
-                    html += `<tr>
-                        <td>${archivo.nombre}</td>
-                        <td>${archivo.correo}</td>
-                        <td><button class="btn btn-danger btn-sm">Eliminar<button></td>
-                    </tr>`;
-                });
-            } else {
-                html = `<tr>
-                    <td colspan="3">NINGUN ARCHIVO COMPARTIDO</td>
-                </tr>`;
-
-            }
-            tblDetalle.innerHTML = html;
-        }
-    };
+function cargarDetalle(id_carpeta) {
+    $('#tblDetalle').DataTable({
+        ajax: {
+            url: base_url + 'archivos/verDetalle/' + id_carpeta,
+            dataSrc: ''
+        },
+        columns: [
+            { data: 'acciones' },
+            { data: 'correo' },
+            { data: 'nombre' },
+        ],
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/2.2.2/i18n/es-ES.json'
+        },
+        responsive: true,
+        destroy: true,
+        order: [[1, 'desc']],
+    });
+    return;
 
 }
