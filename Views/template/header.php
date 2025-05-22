@@ -23,7 +23,7 @@
 
     <!-- Theme Styles -->
     <link href="<?php echo BASE_URL . 'Assets/css/main.css'; ?>" rel="stylesheet">
-    <link href="<?php echo BASE_URL . 'Assets/plugins/DataTables/datatables.min.css'; ?>"/>
+    <link href="<?php echo BASE_URL . 'Assets/plugins/DataTables/datatables.min.css'; ?>" />
     <link href="<?php echo BASE_URL . 'Assets/css/custom.css'; ?>" rel="stylesheet">
     <link href="<?php echo BASE_URL . 'Assets/css/select2.min.css'; ?>" rel="stylesheet">
     <link href="<?php echo BASE_URL . 'Assets/css/select2-bootstrap-5-theme.rtl.min.css'; ?>" rel="stylesheet">
@@ -56,18 +56,18 @@
                     <li class="sidebar-title">
                         Apps
                     </li>
-                    <li class="active-page">
-                        <a href="<?php echo BASE_URL . 'usuarios'; ?>" class="active">
+                    <li class="<?php echo ($data['menu'] == 'usuarios') ? 'active-page' : ''; ?>">
+                        <a href="<?php echo BASE_URL . 'usuarios'; ?>" class="<?php echo ($data['menu'] == 'usuarios') ? 'active' : ''; ?>">
                             <i class="material-icons">
                                 people_alt
                             </i>Usuarios
                         </a>
                     </li>
-                    <li>
-                        <a href="<?php echo BASE_URL . 'compartidos'; ?>"><i class="material-icons-two-tone">inbox</i>Compartidos<span class="badge rounded-pill badge-danger float-end">87</span></a>
+                    <li class="<?php echo ($data['menu'] == 'share') ? 'active-page' : ''; ?>">
+                        <a href="<?php echo BASE_URL . 'compartidos'; ?>" class="<?php echo ($data['menu'] == 'share') ? 'active' : ''; ?>"><i class="material-icons-two-tone">inbox</i>Compartidos<span class="badge rounded-pill badge-danger float-end">87</span></a>
                     </li>
-                    <li>
-                        <a href="<?php echo BASE_URL . 'admin'; ?>"><i class="material-icons-two-tone">cloud_queue</i>File Manager</a>
+                    <li class="<?php echo ($data['menu'] == 'admin') ? 'active-page' : ''; ?>">
+                        <a href="<?php echo BASE_URL . 'admin'; ?>" class="<?php echo ($data['menu'] == 'admin') ? 'active' : ''; ?>"><i class="material-icons-two-tone">cloud_queue</i>File Manager</a>
                     </li>
                 </ul>
             </div>

@@ -195,14 +195,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     eliminar.forEach(enlace => {
         enlace.addEventListener('click', function (e) {
-            alert(e.target.getAttribute('data-id'))
-            // const url = base_url + 'archivos/eliminarCompartido/' + id;
-            // eliminarRegistro('ESTA SEGURO DE ELIMINAR', 'EL ARCHIVO COMPARTIDO SE ELIMINARA DE FORMA PERMANENTE EN 30 DIAS', 'SI ELIMINAR', url, tbl)
+            let id = e.target.getAttribute('data-id');
+            const url = base_url + 'archivos/eliminar/' + id;
+            eliminarRegistro('ESTA SEGURO DE ELIMINAR', 'EL ARCHIVO SE ELIMINARA DE FORMA PERMANENTE EN 30 DIAS', 'SI ELIMINAR', url, null)
         })
     });
-
-
-
 })
 
 function compartirArchivo(id) {

@@ -26,8 +26,7 @@ class Archivos extends Controller
             $carpetas[$i]['fecha'] = time_ago(strtotime($carpetas[$i]['fecha_create']));
         }
         $data['carpetas'] = $carpetas;
-
-
+        $data['menu'] = '';
         $this->views->getView('archivos', 'index', $data);
     }
 
@@ -88,6 +87,21 @@ class Archivos extends Controller
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
+
+    public function eliminar($id)
+    {
+        $fecha = date('Y-m-d H:i:s');
+        $nueva = date("Y-m-d H:i:s", strtotime($fecha . '+1 month'));
+        $data = $this->model->eliminar($nueva, $id);
+        if ($data == 1) {
+            $res = array('tipo' => 'success', 'mensaje' => 'ARCHIVO DADO DE BAJA');
+        } else {
+            $res = array('tipo' => 'error', 'mensaje' => 'ERROR AL ELIMINAR');
+        }
+        echo json_encode($res);
+        die();
+    }
+
     //eliminar archivo compartido
     public function eliminarCompartido($id)
     {
