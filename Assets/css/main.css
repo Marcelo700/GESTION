@@ -3827,6 +3827,11 @@ body.modal-open {
     padding: 25px 30px 10px;
 }
 
+#modalUsuarios .modal-body {
+    max-height: 70vh; /* máximo 70% de la altura de la ventana */
+    overflow-y: auto;
+}
+
 .modal-title {
     font-size: 16px;
     color: #293442;

@@ -6,7 +6,13 @@ class Archivos extends Controller
     {
         parent::__construct();
         session_start();
-        $this->id_usuario = $_SESSION['id'];
+        if (isset($_COOKIE['id'])) {
+            $this->id_usuario = $_COOKIE['id'];
+            $_SESSION["nombre"] = $_COOKIE['nombre'];
+            $_SESSION["correo"] = $_COOKIE['correo'];
+        } else {
+            header("Location: http://localhost/gestion/");
+        }
     }
     public function index()
     {
@@ -49,8 +55,11 @@ class Archivos extends Controller
                     $dato = $this->model->getUsuario($usuarios[$j]);
                     $result = $this->model->getDetalle($dato['correo'], $archivos[$i]);
                     if (empty($result)) {
-                        $res = $this->model->registrarDetalle($dato['correo'], $archivos[$i],
-                        $this->id_usuario);
+                        $res = $this->model->registrarDetalle(
+                            $dato['correo'],
+                            $archivos[$i],
+                            $this->id_usuario
+                        );
                     } else {
                         $res = 1;
                     }
@@ -72,14 +81,17 @@ class Archivos extends Controller
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
-
-    public function verDetalle($id_carpeta)
+    //eliminar archivo compartido
+    public function eliminarCompartido($id)
     {
-        $data = $this->model->getArchivosCompartidos($id_carpeta);
-        for ($i=0; $i < count($data); $i++) { 
-            $data[$i]['acciones'] = '<button class="btn btn-danger btn-sm">Eliminar</button>';
+        $fecha = date('Y-m-d H:i:s');
+        $data = $this->model->eliminarCompartido($fecha, $id);
+        if ($data == 1) {
+            $res = array('tipo' => 'success', 'mensaje' => 'ARCHIVO DADO DE BAJA');
+        } else {
+            $res = array('tipo' => 'error', 'mensaje' => 'ERROR AL ELIMINAR');
         }
-        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        echo json_encode($res);
         die();
     }
 }

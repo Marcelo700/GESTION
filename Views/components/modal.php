@@ -1,22 +1,26 @@
-<div id="modalFile" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
+<div id="modalFile" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="title-file" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="title">SUBIR O CREAR CARPETA</h5>
-                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                </button>
+                <h5 class="modal-title" id="title-file">SUBIR O CREAR CARPETA</h5>
+                <button class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
                 <div class="d-grid">
-                    <button type="button" id="btnNuevacarpeta" class="btn btn-outline-primary m-r-xs"><i class="material-icons">folder</i>Nueva Carpeta</button>
+                    <button type="button" id="btnNuevacarpeta" class="btn btn-outline-primary m-r-xs" aria-label="Crear nueva carpeta">
+                        <i class="material-icons">folder</i> Nueva Carpeta
+                    </button>
                     <hr>
-                    <input type="file" id="file" class="d-none" name="file">
-                    <button type="button" id="btnSubirArchivo" class="btn btn-outline-success m-r-xs"><i class="material-icons">folder_zip</i>Subir Archivo</button>
+                    <input type="file" id="file" class="d-none" name="file" />
+                    <button type="button" id="btnSubirArchivo" class="btn btn-outline-success m-r-xs" aria-label="Subir archivo">
+                        <i class="material-icons">folder_zip</i> Subir Archivo
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <div id="modalCarpeta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
@@ -65,40 +69,46 @@
     </div>
 </div>
 
-<div id="modalUsuarios" class="modal fade" tabindex="-1"
-    aria-labelledby="my-modal-title" aria-hidden="true">
+<div id="modalUsuarios" class="modal fade" tabindex="-1" aria-labelledby="my-modal-title" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="title-usuarios">Agregar usuarios</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
             </div>
             <form id="frmCompartir">
                 <div class="modal-body">
-                    <div id="container_archivos">
-                        <input type="hidden" id="id_archivo" name="archivos[]">
-                    </div>
-                    <select class="js-states form-control" id="usuarios" name="usuarios[]" tabindex="-1" style="display: none; width: 100%;" multiple="multiple">
+                    <select class="js-states form-control" id="usuarios" name="usuarios[]"
+                        tabindex="-1" style="display: none; width: 100%;" multiple="multiple">
                     </select>
                     <hr>
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="tblDetalle" style="width: 100%; ">
-                            <thead>
-                                <tr>
-                                    <th>Archivo</th>
-                                    <th>Usuario</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                        </table>
+                    <div class="accordion accordion-flush mb-3" id="accordionFlushExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    SELECCIONAR ARCHIVOS A COMPARTIR
+                                </button>
+                            </h2>
+                            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <div id="container_archivos">
+                                        <input type="hidden" id="id_archivo" name="archivos[]">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <hr>
+                    <div class="text-center">
+                        <a class="btn btn-outline-info" href="#" id="btnverDetalle">VER DETALLES</a>
+                    </div>
+
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Compartir</button>
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-outline-primary">Compartir</button>
                 </div>
             </form>
         </div>

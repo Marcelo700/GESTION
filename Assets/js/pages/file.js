@@ -31,6 +31,9 @@ const usuarios = document.querySelector('#usuarios');
 
 const btnCompartir = document.querySelector('#btnCompartir');
 const container_archivos = document.querySelector('#container_archivos');
+const btnverDetalle = document.querySelector('#btnverDetalle');
+
+
 
 document.addEventListener('DOMContentLoaded', function () {
     btnUpload.addEventListener('click', function () {
@@ -121,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     $(".js-states").select2({
+        theme: 'bootstrap-5',
         placeholder: 'Buscar y agregar usuarios',
         maximumSelectionLength: 5,
         minimumInputLength: 2,
@@ -180,6 +184,11 @@ document.addEventListener('DOMContentLoaded', function () {
         verArchivos();
     })
 
+    //Ver detalle compartido
+    btnverDetalle.addEventListener('click', function(){
+        window.location = base_url + 'admin/verdetalle/' + id_carpeta.value;
+    })
+
 
 })
 
@@ -200,14 +209,14 @@ function verArchivos() {
             if (res.length > 0) {
                 res.forEach(archivo => {
                     html += `<div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="${archivo.id}" name="archivos[]"
-                        id="flexCheckDefault_${archivo.id}">
+                        <input class="form-check-input" type="checkbox" value="${archivo.id}" 
+                        name="archivos[]" id="flexCheckDefault_${archivo.id}">
                         <label class="form-check-label" for="flexCheckDefault_${archivo.id}">
                             ${archivo.nombre}
                         </label>
                     </div>`;
                 });
-                cargarDetalle(id_carpeta.value);
+                // cargarDetalle(id_carpeta.value);
             } else {
                 html = `<div class="alert alert-custom alert-indicator-right indicator-warning" 
                 role="alert">
@@ -223,26 +232,4 @@ function verArchivos() {
             myModalUser.show();
         }
     };
-}
-
-function cargarDetalle(id_carpeta) {
-    $('#tblDetalle').DataTable({
-        ajax: {
-            url: base_url + 'archivos/verDetalle/' + id_carpeta,
-            dataSrc: ''
-        },
-        columns: [
-            { data: 'acciones' },
-            { data: 'correo' },
-            { data: 'nombre' },
-        ],
-        language: {
-            url: 'https://cdn.datatables.net/plug-ins/2.2.2/i18n/es-ES.json'
-        },
-        responsive: true,
-        destroy: true,
-        order: [[1, 'desc']],
-    });
-    return;
-
 }

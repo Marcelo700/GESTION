@@ -23,7 +23,7 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
                                         <button type="button" class="btn btn-success">Send</button>
                                     </div>
                                 </div>
