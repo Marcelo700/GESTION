@@ -11,6 +11,20 @@ class Admin extends Controller
             $this->correo = $_COOKIE['correo'];
             $_SESSION["nombre"] = $_COOKIE['nombre'];
             $_SESSION["correo"] = $_COOKIE['correo'];
+            ## eliminar archivos de forma permanente
+            $fecha = date('Y-m-d H:i:s');
+            $eliminar = $this->model->getConsulta();
+            $ruta = 'Assets/archivos/';
+            for ($i = 0; $i < count($eliminar); $i++) {
+                if ($eliminar[$i]['elimina'] < $fecha) {
+                    $accion = $this->model->eliminarRegistro($eliminar[$i]['id']);
+                    if ($accion == 1) {
+                        if (file_exists($ruta . $eliminar[$i]['id_carpeta'] . '/' . $eliminar[$i]['nombre'])) {
+                            unlink($ruta . $eliminar[$i]['id_carpeta'] . '/' . $eliminar[$i]['nombre']);
+                        }
+                    }
+                }
+            }
         } else {
             header("Location: http://localhost/gestion/");
         }
@@ -87,7 +101,7 @@ class Admin extends Controller
         $data['active'] = 'detail';
         $data['archivos'] = $this->model->getArchivos($id_carpeta, $this->id_usuario);
         $data['menu'] = 'admin';
-        $data['shares'] = $this->model->verificarEstado($this->correo); 
+        $data['shares'] = $this->model->verificarEstado($this->correo);
         $this->views->getView('admin', 'archivos', $data);
     }
 

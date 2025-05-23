@@ -90,6 +90,21 @@ class AdminModel extends Query
         return $this->select($sql);
 
     }
+
+    ##eliminar archivos de forma permanente
+    public function getConsulta()
+    {
+        $sql = "SELECT * FROM archivos WHERE estado = 0";
+        return $this->selectAll($sql);
+    }
+
+    public function eliminarRegistro($id_archivo)
+    {
+        $sql = "DELETE FROM archivos WHERE id = ?";
+        $datos = array($id_archivo);
+        return $this->save($sql, $datos);
+
+    }
 }
 
 ?>
