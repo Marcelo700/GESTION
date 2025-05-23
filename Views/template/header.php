@@ -28,7 +28,7 @@
     <link href="<?php echo BASE_URL . 'Assets/css/select2.min.css'; ?>" rel="stylesheet">
     <link href="<?php echo BASE_URL . 'Assets/css/select2-bootstrap-5-theme.rtl.min.css'; ?>" rel="stylesheet">
 
-    <link rel="icon" href="<?php echo BASE_URL . 'Assets/images/favicon.ico'; ?> ">
+    <link rel="icon" href="<?php echo BASE_URL . 'Assets/images/favicon.ico'; ?>">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -64,7 +64,7 @@
                         </a>
                     </li>
                     <li class="<?php echo ($data['menu'] == 'share') ? 'active-page' : ''; ?>">
-                        <a href="<?php echo BASE_URL . 'compartidos'; ?>" class="<?php echo ($data['menu'] == 'share') ? 'active' : ''; ?>"><i class="material-icons-two-tone">inbox</i>Compartidos<span class="badge rounded-pill badge-danger float-end">87</span></a>
+                        <a href="<?php echo BASE_URL . 'compartidos'; ?>" class="<?php echo ($data['menu'] == 'share') ? 'active' : ''; ?>"><i class="material-icons-two-tone">inbox</i>Compartidos<span class="badge rounded-pill badge-danger float-end"><?php echo $data['shares']['total']; ?></span></a>
                     </li>
                     <li class="<?php echo ($data['menu'] == 'admin') ? 'active-page' : ''; ?>">
                         <a href="<?php echo BASE_URL . 'admin'; ?>" class="<?php echo ($data['menu'] == 'admin') ? 'active' : ''; ?>"><i class="material-icons-two-tone">cloud_queue</i>File Manager</a>
@@ -75,7 +75,8 @@
         <div class="app-container">
             <div class="search">
                 <form>
-                    <input class="form-control" type="text" placeholder="Type here..." aria-label="Search">
+                    <input class="form-control" id="inputBusqueda" type="text" placeholder="buscar..." aria-label="Search">
+                    <div id="container-result"></div>
                 </form>
                 <a href="#" class="toggle-search"><i class="material-icons">close</i></a>
             </div>

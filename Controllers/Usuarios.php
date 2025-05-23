@@ -1,16 +1,20 @@
 <?php
 class Usuarios extends Controller
 {
+    private $id_usuario, $correo;
     public function __construct()
     {
         parent::__construct();
         session_start();
+        $this->id_usuario = $_COOKIE['id'];
+        $this->correo = $_COOKIE['correo'];
     }
     public function index()
     {
         $data['title'] = 'Gestion de Usuarios';
         $data['script'] = 'usuarios.js';
         $data['menu'] = 'usuarios';
+        $data['shares'] = $this->model->verificarEstado($this->correo); 
         $this->views->getView('usuarios', 'index', $data);
     }
 

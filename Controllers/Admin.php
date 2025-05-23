@@ -1,13 +1,14 @@
 <?php
 class Admin extends Controller
 {
-    private $id_usuario;
+    private $id_usuario, $correo;
     public function __construct()
     {
         parent::__construct();
         session_start();
         if (isset($_COOKIE['id'])) {
             $this->id_usuario = $_COOKIE['id'];
+            $this->correo = $_COOKIE['correo'];
             $_SESSION["nombre"] = $_COOKIE['nombre'];
             $_SESSION["correo"] = $_COOKIE['correo'];
         } else {
@@ -27,6 +28,7 @@ class Admin extends Controller
             $carpetas[$i]['fecha'] = time_ago(strtotime($carpetas[$i]['fecha_create']));
         }
         $data['carpetas'] = $carpetas;
+        $data['shares'] = $this->model->verificarEstado($this->correo);
         $this->views->getView('admin', 'home', $data);
     }
 
@@ -60,7 +62,7 @@ class Admin extends Controller
         $name = $archivo['name'];
         $tmp = $archivo['tmp_name'];
         $tipo = $archivo['type'];
-        $data = $this->model->subirArchivos($name, $tipo, $id_carpeta);
+        $data = $this->model->subirArchivos($name, $tipo, $id_carpeta, $this->id_usuario);
         if ($data > 0) {
             $destino = 'Assets/archivos';
             if (!file_exists($destino)) {
@@ -85,6 +87,7 @@ class Admin extends Controller
         $data['active'] = 'detail';
         $data['archivos'] = $this->model->getArchivos($id_carpeta, $this->id_usuario);
         $data['menu'] = 'admin';
+        $data['shares'] = $this->model->verificarEstado($this->correo); 
         $this->views->getView('admin', 'archivos', $data);
     }
 
@@ -99,6 +102,7 @@ class Admin extends Controller
             exit;
         }
         $data['menu'] = 'admin';
+        $data['shares'] = $this->model->verificarEstado($this->correo);
         $this->views->getView('admin', 'detalle', $data);
     }
 

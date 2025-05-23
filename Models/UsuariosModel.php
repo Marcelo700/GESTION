@@ -47,6 +47,14 @@ class UsuariosModel extends Query
         $datos = array($nombre, $apellido, $correo, $telefono, $direccion, $rol, $id);
         return $this->save($sql, $datos);
     }
+
+    ### ver el total de  archivos compartidos
+    public function verificarEstado($correo)
+    {
+        $sql = "SELECT COUNT(id) AS total FROM detalle_archivos WHERE correo = '$correo' AND estado = 1";
+        return $this->select($sql);
+
+    }
 }
 
 ?>

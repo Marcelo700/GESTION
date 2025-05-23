@@ -19,22 +19,20 @@ function verDetalle(id_detalle) {
             const res = JSON.parse(this.responseText);
             let html = `<span class="mailbox-open-date">${res.fecha}</span>
                         <h5 class="mailbox-open-title">
-                        Work together with better collaboration tools
+                        ${res.nombre}
                         </h5>
                         <div class="mailbox-open-author">
                             <img src="${ base_url + 'Assets/images/logo.png'}" alt="">
                             <div class="mailbox-open-author-info">
-                                <span class="mailbox-open-author-info-email d-block">${res.correo}</span>
-                                <span class="mailbox-open-author-info-to">To <span class="badge badge-info align-self-center">devs</span></span>
+                                <span class="mailbox-open-author-info-email d-block">${res.compartido}</span>
+                                <span class="mailbox-open-author-info-to">To <span class="badge badge-info align-self-center">${res.usuario}</span></span>
                             </div>
                             <div class="mailbox-open-actions">
-                                <a href="#" class="btn btn-primary">Forward</a>
-                                <a href="#" class="btn btn-danger">Delete</a>
+                                <a href="#" class="btn btn-danger" onclick="eliminarCompartido(${res.id})">Delete</a>
                             </div>
                         </div>
                         <div class="mailbox-open-content-email">
-                        <p>Vestibulum vitae maximus nisi. Cras vitae ligula metus. Nulla quis tortor at felis volutpat tempus ac vel quam. Sed eget nibh tortor. Phasellus sit amet pharetra justo, fringilla pellentesque nibh. Donec euismod metus nec neque hendrerit, sit amet ornare libero ultrices. Vestibulum non massa a massa ultrices consectetur. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam gravida rhoncus enim, non eleifend purus malesuada eget. Nunc vitae pretium augue. Duis non nisi quis enim accumsan consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae bibendum turpis, eu feugiat enim. Aliquam quis mauris eget ipsum faucibus mollis ut tincidunt libero.
-                        </p>
+                        <p>Descripcion</p>
                         <div class="mailbox-open-content-email-attachments">
                             <ul class="attachments-files-list list-unstyled">
                                 <li class="attachments-files-list-item">
@@ -42,10 +40,10 @@ function verDetalle(id_detalle) {
                                         <i class="material-icons-outlined">insert_drive_file</i>
                                     </span>
                                     <span class="attachments-files-list-item-content">
-                                        <span class="attachments-files-list-item-title">Invoice.pdf</span>
-                                        <span class="attachments-files-list-item-size">14 MB</span>
+                                        <span class="attachments-files-list-item-title">${res.nombre}</span>
+                                        <span class="attachments-files-list-item-size">${res.tipo}</span>
                                     </span>
-                                    <a href="${base_url + 'Assets/archivos/' + res.id_carpeta + '/' + res.nombre}" download class="attachments-files-list-item-download-btn">
+                                    <a target="_blank" href="${base_url + 'Assets/archivos/' + res.id_carpeta + '/' + res.nombre}" class="attachments-files-list-item-download-btn">
                                         <i class="material-icons-outlined">
                                             download
                                 </i>
@@ -60,4 +58,9 @@ function verDetalle(id_detalle) {
             document.querySelector('#content-Info').innerHTML = html;
         }
     };
+}
+
+function eliminarCompartido(id){
+    const url = base_url + 'compartidos/eliminar/' + id;
+    eliminarRegistro('ESTA SEGURO DE ELIMINAR', 'EL ARCHIVO COMPARTIDO SE ELIMINARA DE TU LISTA', 'SI ELIMINAR', url, null)
 }

@@ -1,4 +1,7 @@
 <?php
+
+use function PHPSTORM_META\sql_injection_subst;
+
 class archivosModel extends Query
 {
     public function __construct()
@@ -19,9 +22,9 @@ class archivosModel extends Query
         return $this->selectAll($sql);
     }
 
-    public function getUsuarios($valor)
+    public function getUsuarios($valor, $id_usuario)
     {
-        $sql = "SELECT * FROM usuarios WHERE correo LIKE '%" .$valor . "%'  AND estado = 1 LIMIT 10";
+        $sql = "SELECT * FROM usuarios WHERE correo LIKE '%" .$valor . "%' AND id != $id_usuario AND estado = 1 LIMIT 10";
         return $this->selectAll($sql);
     }
 
@@ -68,6 +71,20 @@ class archivosModel extends Query
         $sql = "UPDATE archivos SET estado = ?, elimina = ? WHERE id = ?";
         $array = [0 , $fecha, $id];
         return $this->save($sql, $array);
+    }
+
+    ### ver el total de  archivos compartidos
+    public function verificarEstado($correo)
+    {
+        $sql = "SELECT COUNT(id) AS total FROM detalle_archivos WHERE correo = '$correo' AND estado = 1";
+        return $this->select($sql);
+
+    }
+
+    public function getBusqueda($valor, $id_usuario)
+    {
+        $sql = "SELECT * FROM archivos WHERE nombre LIKE '%". $valor ."%' AND id_usuario = $id_usuario  AND estado = 1 LIMIT 10";
+        return $this->selectAll($sql);
     }
 
 
