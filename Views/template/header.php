@@ -103,15 +103,6 @@
                         </div>
                         <div class="d-flex">
                             <ul class="navbar-nav">
-                                <li class="nav-item hidden-on-mobile">
-                                    <a class="nav-link active" href="#">Applications</a>
-                                </li>
-                                <li class="nav-item hidden-on-mobile">
-                                    <a class="nav-link" href="#">Reports</a>
-                                </li>
-                                <li class="nav-item hidden-on-mobile">
-                                    <a class="nav-link" href="#">Projects</a>
-                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link toggle-search" href="#"><i class="material-icons">search</i></a>
                                 </li>
@@ -120,7 +111,7 @@
                                     <div class="dropdown-menu dropdown-menu-end notifications-dropdown" aria-labelledby="notificationsDropDown">
                                         <h6 class="dropdown-header">Perfil</h6>
                                         <div class="notifications-dropdown-list">
-                                            <a href="#">
+                                            <a href="<?php echo BASE_URL . 'usuarios/profile'; ?>">
                                                 <div class="notifications-dropdown-item">
                                                     <div class="notifications-dropdown-item-image">
                                                         <span class="notifications-badge">
@@ -132,7 +123,7 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                            <a href="<?php echo BASE_URL . 'principal/salir' ?>">
+                                            <a href="<?php echo BASE_URL . 'usuarios/salir' ?>">
                                                 <div class="notifications-dropdown-item">
                                                     <div class="notifications-dropdown-item-image">
                                                         <span class="notifications-badge">

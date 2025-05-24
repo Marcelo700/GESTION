@@ -38,12 +38,7 @@ class Principal extends Controller
         die();   
     }
 
-    public Function Salir()  
-    {
-        session_destroy();
-        header('Location: '. BASE_URL);
-        
-    }
+    
 
     
 }

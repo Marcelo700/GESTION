@@ -21,14 +21,14 @@ class Archivos extends Controller
         $data['active'] = 'todos';
         $data['script'] = 'file.js';
         $data['shares'] = $this->model->verificarEstado($this->correo);
-        $data['archivos'] = $this->model->getArchivos($this->id_usuario);
+        $data['archivos'] = $this->model->getArchivos(1, $this->id_usuario);
         $carpetas = $this->model->getCarpetas($this->id_usuario);
         for ($i = 0; $i < count($carpetas); $i++) {
             $carpetas[$i]['color'] = substr(md5($carpetas[$i]['id']), 0, 6);
             $carpetas[$i]['fecha'] = time_ago(strtotime($carpetas[$i]['fecha_create']));
         }
         $data['carpetas'] = $carpetas;
-        $data['menu'] = '';
+        $data['menu'] = 'admin';
         $data['shares'] = $this->model->verificarEstado($this->correo); 
         $this->views->getView('archivos', 'index', $data);
     }
@@ -95,7 +95,7 @@ class Archivos extends Controller
     {
         $fecha = date('Y-m-d H:i:s');
         $nueva = date("Y-m-d H:i:s", strtotime($fecha . '+1 month'));
-        $data = $this->model->eliminar($nueva, $id);
+        $data = $this->model->eliminar(0 ,$nueva, $id);
         if ($data == 1) {
             $res = array('tipo' => 'success', 'mensaje' => 'ARCHIVO DADO DE BAJA');
         } else {
@@ -124,6 +124,40 @@ class Archivos extends Controller
     {
         $data = $this->model->getBusqueda($valor, $this->id_usuario);
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    public function recicle()
+    {
+        $data['title'] = 'Archivos eliminados';
+        $data['active'] = 'deleted';
+        $data['script'] = 'deleted.js';
+        $data['shares'] = $this->model->verificarEstado($this->correo);
+        $data['menu'] = 'admin';
+        $this->views->getView('archivos', 'deleted', $data);
+    }
+
+    public function listarHistorial($valor)
+    {
+        $data = $this->model->getArchivos(0, $this->id_usuario);
+        for ($i=0; $i < count($data); $i++) { 
+            $data[$i]['accion'] = '<a href="#" class="btn btn-danger btn-sm" onclick="restaurar(' . $data[$i]['id'] . ')">
+                    restaurar
+                </a>';
+        }
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    public function delete($id) 
+    {
+        $data = $this->model->eliminar(1, null, $id);
+        if ($data == 1) {
+            $res = array('tipo' => 'success', 'mensaje' => 'ARCHIVO RESTAURADO');
+        } else {
+            $res = array('tipo' => 'error', 'mensaje' => 'ERROR AL RESTAURAR');
+        }
+        echo json_encode($res, JSON_UNESCAPED_UNICODE);
         die();
     }
 }

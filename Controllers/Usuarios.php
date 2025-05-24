@@ -14,7 +14,7 @@ class Usuarios extends Controller
         $data['title'] = 'Gestion de Usuarios';
         $data['script'] = 'usuarios.js';
         $data['menu'] = 'usuarios';
-        $data['shares'] = $this->model->verificarEstado($this->correo); 
+        $data['shares'] = $this->model->verificarEstado($this->correo);
         $this->views->getView('usuarios', 'index', $data);
     }
 
@@ -51,7 +51,7 @@ class Usuarios extends Controller
         $rol = $_POST['rol'];
         $id_usuario = $_POST['id_usuario'];
         if (
-            empty($nombre) || empty($apellido) || empty($correo) || empty($telefono) 
+            empty($nombre) || empty($apellido) || empty($correo) || empty($telefono)
             || empty($direccion) || empty($clave) || empty($rol)
         ) {
             $res = array('tipo' => 'Warning', 'mensaje' => 'TODOS LOS CAMPOS SON REQUERIDOS');
@@ -119,5 +119,50 @@ class Usuarios extends Controller
         $data = $this->model->getUsuario($id);
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
+    }
+
+    public function profile()
+    {
+        $data['title'] = 'Perfil del usuario';
+        $data['script'] = 'profile.js';
+        $data['menu'] = 'usuarios';
+        $data['shares'] = $this->model->verificarEstado($this->correo);
+        $this->views->getView('usuarios', 'perfil', $data);
+    }
+
+    public function cambiarPass()
+    {
+        $actual = $_POST['clave_actual'];
+        $nueva = $_POST['clave_nueva'];
+        $confirmar = $_POST['clave_confirmar'];
+        if (empty($actual) || empty($nueva) || empty($confirmar)) {
+            $res = array('tipo' => 'Warning', 'mensaje' => 'TODOS LOS CAMPOS SON REQUERIDOS');
+        } else {
+            if ($nueva != $confirmar) {
+                $res = array('tipo' => 'Warning', 'mensaje' => 'LAS CONTRASEÑAS NO COINCIDEN');
+            } else {
+                $consulta = $this->model->getUsuario($this->id_usuario);
+                if (password_verify($actual, $consulta['clave'])) {
+                    $hash = password_hash($nueva, PASSWORD_DEFAULT);
+                    $data = $this->model->cambiarPass($hash, $this->id_usuario);
+                    if ($data == 1) {
+                        $res = array('tipo' => 'success', 'mensaje' => 'CONTRASEÑA MODIFICADA');
+                    } else {
+                        $res = array('tipo' => 'error', 'mensaje' => 'ERROR AL MODIFICAR');
+                    }
+                } else {
+                    $res = array('tipo' => 'warning', 'mensaje' => 'CONTRASEÑA ACTUAL INCORRECTA');
+                }
+            }
+        }
+        echo json_encode($res, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+    
+    public Function Salir()  
+    {
+        session_destroy();
+        header('Location: '. BASE_URL);
+        
     }
 }

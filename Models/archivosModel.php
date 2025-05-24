@@ -10,9 +10,9 @@ class archivosModel extends Query
     }
 
 
-    public function getArchivos($id_usuario)
+    public function getArchivos($estado, $id_usuario)
     {
-        $sql = "SELECT a.* FROM archivos a INNER JOIN carpetas c ON a.id_carpeta = c.id WHERE c.id_usuario = $id_usuario ORDER BY a.id DESC";
+        $sql = "SELECT a.* FROM archivos a INNER JOIN carpetas c ON a.id_carpeta = c.id WHERE c.id_usuario = $id_usuario AND  a.estado = $estado ORDER BY a.id DESC";
         return $this->selectAll($sql);
     }
 
@@ -66,10 +66,10 @@ class archivosModel extends Query
         return $this->select($sql);
     }
 
-    public function eliminar($fecha, $id)
+    public function eliminar($estado, $fecha, $id)
     {
         $sql = "UPDATE archivos SET estado = ?, elimina = ? WHERE id = ?";
-        $array = [0 , $fecha, $id];
+        $array = [$estado , $fecha, $id];
         return $this->save($sql, $array);
     }
 
