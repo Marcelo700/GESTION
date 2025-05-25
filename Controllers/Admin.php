@@ -11,6 +11,11 @@ class Admin extends Controller
             $this->correo = $_COOKIE['correo'];
             $_SESSION["nombre"] = $_COOKIE['nombre'];
             $_SESSION["correo"] = $_COOKIE['correo'];
+            ## validar sesion
+            if (empty($_SESSION['id'])){
+                header('location: ' . BASE_URL);
+                exit;
+            }
             ## eliminar archivos de forma permanente
             $fecha = date('Y-m-d H:i:s');
             $eliminar = $this->model->getConsulta();

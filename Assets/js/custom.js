@@ -8,10 +8,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
     inputBusqueda.addEventListener('blur', function (e) {
+    setTimeout(() => {
         e.target.value = '';
         container_result.innerHTML = '';
-
-    });
+    }, 150); // espera 150 ms para que el clic en el enlace se procese primero
+})
 
 })
 
@@ -73,33 +74,32 @@ function buscarArchivos(valor) {
     http.open("GET", url, true);
     http.send();
     http.onreadystatechange = function () {
-
         if (this.readyState == 4 && this.status == 200) {
             const res = JSON.parse(this.responseText);
-            let html = `<div class="card">
-                        <div class="card-body">`;
+            let html = '';
             if (res.length > 0) {
                 res.forEach(archivo => {
-                    html += `<h5 class="card-title">
-                            <a href=${base_url + 'Assets/archivos/' + archivo.id_carpeta + '/' + archivo.nombre} " download="${archivo.nombre}" }">${archivo.nombre}</a>
-                            </h5><hr>`;
+                    html += `<div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                        <a href="${ base_url + 'Assets/archivos/' + archivo.id_carpeta + '/' + archivo.nombre } " download="${ archivo.nombre }" }">${archivo.nombre}</a>
+                        </h5>
+                    </div>
+                </div>`;
                 });
-                html += `</div>
-                    </div>`
             } else {
-                html = `<div class="alert alert-custom alert-indicator-top indicator-danger" 
-                role="alert">
-                <div class="alert-content">
-                    <span class="alert-title">Mensaje!</span>
-                    <span class="alert-text">NO EXISTE EL ARCHIVO CON ESE NOMBRE</span>
-                </div>
-            </div>`;
+                html = `<div class="alert alert-custom alert-indicator-top indicator-danger" role="alert">
+                            <div class="alert-content">
+                                <span class="alert-title">Mensaje!</span>
+                                <span class="alert-text">NO EXISTE EL ARCHIVO CON ESE NOMBRE</span>
+                            </div>
+                        </div>`;
             }
             container_result.innerHTML = html;
-
-        };
-
+        }
     }
 }
+
+
 
 

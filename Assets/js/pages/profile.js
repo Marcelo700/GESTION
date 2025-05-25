@@ -1,3 +1,11 @@
+const frmProfile = document.querySelector('#frmProfile');
+const correo = document.querySelector('#correo');
+const telefono = document.querySelector('#telefono');
+const nombre = document.querySelector('#nombre');
+const apellido = document.querySelector('#apellido');
+const direccion = document.querySelector('#direccion');
+
+
 const frmPass = document.querySelector('#frmPass');
 const clave_actual = document.querySelector('#clave_actual');
 const clave_nueva = document.querySelector('#clave_nueva');
@@ -33,5 +41,26 @@ document.addEventListener('DOMContentLoaded', function () {
                 };
             }
         }
-    });
-});
+    })
+
+    frmProfile.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Validación de campos vacíos
+        if (correo.value == '' || telefono.value == '' || nombre.value == '' || apellido.value == '' || direccion.value == '') {
+            alertaPerzonalizada('warning', 'TODOS LOS CAMPOS SON REQUERIDOS');
+        } else {
+            const data = new FormData(frmProfile);
+            const http = new XMLHttpRequest();
+            const url = base_url + 'usuarios/cambiarProfile';
+            http.open("POST", url, true);
+            http.send(data);
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    const res = JSON.parse(this.responseText);
+                    alertaPerzonalizada(res.tipo, res.mensaje);
+                }
+            };
+        }
+    })
+})

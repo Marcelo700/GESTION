@@ -14,6 +14,10 @@ class Archivos extends Controller
         } else {
             header("Location: http://localhost/gestion/");
         }
+        if (empty($_SESSION['id'])){
+                header('location: ' . BASE_URL);
+                exit;
+            }
     }
     public function index()
     {

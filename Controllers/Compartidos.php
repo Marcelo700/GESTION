@@ -8,6 +8,10 @@ class Compartidos extends Controller
         session_start();
         $this->id_usuario = $_COOKIE['id'];
         $this->correo = $_COOKIE['correo'];
+        if (empty($_SESSION['id'])){
+                header('location: ' . BASE_URL);
+                exit;
+            }
     }
     public function index()
     {

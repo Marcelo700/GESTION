@@ -6,8 +6,13 @@ class Usuarios extends Controller
     {
         parent::__construct();
         session_start();
-        $this->id_usuario = $_COOKIE['id'];
-        $this->correo = $_COOKIE['correo'];
+        $this->id_usuario = $_COOKIE['id'] ?? null;
+        $this->correo = $_COOKIE['correo'] ?? null;
+        ##validar sesion
+        if (empty($_SESSION['id'])){
+                header('location: ' . BASE_URL);
+                exit;
+            }
     }
     public function index()
     {
@@ -126,6 +131,7 @@ class Usuarios extends Controller
         $data['title'] = 'Perfil del usuario';
         $data['script'] = 'profile.js';
         $data['menu'] = 'usuarios';
+        $data['usuario'] = $this->model->getUsuario($this->id_usuario);
         $data['shares'] = $this->model->verificarEstado($this->correo);
         $this->views->getView('usuarios', 'perfil', $data);
     }
@@ -158,11 +164,37 @@ class Usuarios extends Controller
         echo json_encode($res, JSON_UNESCAPED_UNICODE);
         die();
     }
-    
-    public Function Salir()  
+
+    public function cambiarProfile()
+    {
+        if (empty($this->id_usuario)) {
+        $res = array('tipo' => 'error', 'mensaje' => 'Usuario no autenticado o sesión expirada');
+        echo json_encode($res, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+        $correo = $_POST['correo'] ?? null;
+        $nombre = $_POST['nombre'] ?? null;
+        $apellido = $_POST['apellido'] ?? null;
+        $telefono = $_POST['telefono'] ?? null;
+        $direccion = $_POST['direccion'] ?? null;
+        if (empty($correo) || empty($nombre) || empty($apellido) || empty($telefono) || empty($direccion)) {
+            $res = array('tipo' => 'Warning', 'mensaje' => 'TODOS LOS CAMPOS SON REQUERIDOS');
+        } else {
+            $usuario = $this->model->getUsuario($this->id_usuario);
+            $data = $this->model->modificar($nombre, $apellido, $correo, $telefono, $direccion, $usuario['rol'],  $this->id_usuario);
+            if ($data == 1) {
+                $res = array('tipo' => 'success', 'mensaje' => 'DATOS MODIFICADO');
+            } else {
+                $res = array('tipo' => 'error', 'mensaje' => 'ERROR AL MODIFICAR');
+            }
+        }
+        echo json_encode($res, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    public function Salir()
     {
         session_destroy();
-        header('Location: '. BASE_URL);
-        
+        header('Location: ' . BASE_URL);
     }
 }
