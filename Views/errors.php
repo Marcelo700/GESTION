@@ -46,7 +46,7 @@
                 It seems that the page you are looking for no longer exists.<br>
                 We will try our best to fix this soon.
             </span>
-            <a href="<?php echo BASE_URL; ?>" class="btn btn-dark mt-3">Go to dashboard</a>
+            <a href="<?php echo BASE_URL . 'admin'; ?>" class="btn btn-dark mt-3">Go to dashboard</a>
         </div>
         <div class="app-error-background"></div>
     </div>

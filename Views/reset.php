@@ -8,7 +8,7 @@
     <meta name="description" content="Responsive Admin Dashboard Template">
     <meta name="keywords" content="admin,dashboard">
     <meta name="author" content="stacks">
-  
+
 
     <!-- Title -->
     <title><?php echo $data['title']; ?></title>
@@ -44,14 +44,14 @@
             <div class="logo">
                 <a href="#"><?php echo $data['title']; ?></a>
             </div>
-            <p class="auth-description">Bienvenidos al sistema de gestor de archivos ACS Construglobal SRL</p>
+
 
             <form id="formulario" autocomplete="off">
                 <div class="auth-credentials m-b-xxl">
-                    <label for="correo" class="form-label">Correo Electronico <span class="text-danger">*</label>
+                    <label for="correo" class="form-label">Contraseña Nueva<span class="text-danger">*</label>
                     <input type="email" class="form-control m-b-md" id="correo" name="correo" aria-describedby="correo" placeholder="Correo Electronico">
 
-                    <label for="clave" class="form-label">Contraseña <span class="text-danger">*</label>
+                    <label for="clave" class="form-label">Confirmar Contraseña <span class="text-danger">*</label>
                     <input type="password" class="form-control" id="clave" name="clave" aria-describedby="clave" placeholder="Contraseña">
                 </div>
 
@@ -60,27 +60,6 @@
                     <a href="#" class="auth-forgot-password float-end" id="reset">Olvidastes tu contraseña?</a>
                 </div>
             </form>
-        </div>
-    </div>
-
-    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Olvidastes tu contraseña</h5>
-                    <button class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="inputReset">Correo</label>
-                        <input id="inputReset" class="form-control" type="text" name="inputReset" placeholder="Correo electronico">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" type="button" id="btnProcesar">Procesar</button>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -93,7 +72,7 @@
     <script src="<?php echo BASE_URL . 'Assets/js/sweetalert2@11.js'; ?>"></script>
     <script src="<?php echo BASE_URL . 'Assets/js/custom.js'; ?>"></script>
     <script>
-        const base_url= '<?php echo BASE_URL; ?>';
+        const base_url = '<?php echo BASE_URL; ?>';
     </script>
     <script src="<?php echo BASE_URL . 'Assets/js/pages/login.js'; ?>"></script>
 </body>
