@@ -13,7 +13,7 @@
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped table-hover display nowrap" style="width:120%" id="tblUsuarios">
+                <table class="table table-striped table-hover"  style="width:100%" id="tblUsuarios">
                     <thead>
                         <tr>
                             <th></th>

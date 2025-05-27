@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         responsive: true,
         order: [[1, 'desc']],
+        
     });
 })
 

@@ -75,7 +75,7 @@
         <div class="app-container">
             <div class="search">
                 <form>
-                    <input class="form-control" id="inputBusqueda" type="text" placeholder="buscar..." aria-label="Search">
+                    <input class="form-control" id="inputBusqueda" type="text" placeholder="buscar..." aria-label="Search" autocomplete="off">
                     <div id="container-result"></div>
                 </form>
                 <a href="#" class="toggle-search"><i class="material-icons">close</i></a>

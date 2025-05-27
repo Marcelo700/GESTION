@@ -2325,8 +2325,8 @@ table.dataTable, .dataTables_scroll {
 }
 
 table.dataTable td, table.dataTable th {
-    padding: 15px 20px!important;
-    border-bottom: 1px solid #e1e7ed!important;
+    padding: 5px 5px!important;
+    border-bottom: 2px solid #e1e7ed!important;
 }
 
 table.dataTable tfoot th {
@@ -2346,7 +2346,7 @@ table.dataTable thead .sorting:before, table.dataTable thead .sorting_asc:before
     content: '\e316';
     font-family: 'Material Icons';
     font-size: 14px;
-    right: 10px;
+    right: 20px;
     bottom: calc(50% - 4px);
 }
 

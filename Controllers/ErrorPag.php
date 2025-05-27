@@ -9,6 +9,5 @@ class ErrorPag extends Controller
     {
         $data['title'] = 'Pagina no encontrada';
         $this->views->getView('principal', 'errors', $data);
-    }
-    
+    } 
 }
