@@ -47,17 +47,17 @@
 
 
             <form id="formulario" autocomplete="off">
+                <input type="hidden" name="token" value="<?php echo $data['usuarios']['token'];?>">
                 <div class="auth-credentials m-b-xxl">
                     <label for="correo" class="form-label">Contraseña Nueva<span class="text-danger">*</label>
-                    <input type="email" class="form-control m-b-md" id="correo" name="correo" aria-describedby="correo" placeholder="Correo Electronico">
+                    <input type="password" class="form-control m-b-md" id="clave_nueva" name="clave_nueva" placeholder="Contraseña Nueva">
 
-                    <label for="clave" class="form-label">Confirmar Contraseña <span class="text-danger">*</label>
-                    <input type="password" class="form-control" id="clave" name="clave" aria-describedby="clave" placeholder="Contraseña">
+                    <label for="correo" class="form-label">Contraseña Nueva <span class="text-danger">*</span></label>
+                    <input type="password" class="form-control" id="clave_confirmar" name="clave_confirmar" placeholder="Confirmar Contraseña">
                 </div>
 
                 <div class="auth-submit">
-                    <button type="submit" class="btn btn-primary">Acceso</button>
-                    <a href="#" class="auth-forgot-password float-end" id="reset">Olvidastes tu contraseña?</a>
+                    <button type="submit" class="btn btn-primary">Cambiar</button>
                 </div>
             </form>
         </div>
@@ -70,11 +70,11 @@
     <script src="<?php echo BASE_URL . 'Assets/plugins/pace/pace.min.js'; ?>"></script>
     <script src="<?php echo BASE_URL . 'Assets/js/main.min.js'; ?>"></script>
     <script src="<?php echo BASE_URL . 'Assets/js/sweetalert2@11.js'; ?>"></script>
-    <script src="<?php echo BASE_URL . 'Assets/js/custom.js'; ?>"></script>
+    <script src="<?php echo BASE_URL . 'Assets/js/alertas.js'; ?>"></script>
     <script>
         const base_url = '<?php echo BASE_URL; ?>';
     </script>
-    <script src="<?php echo BASE_URL . 'Assets/js/pages/login.js'; ?>"></script>
+    <script src="<?php echo BASE_URL . 'Assets/js/pages/reset.js'; ?>"></script>
 </body>
 
 </html>

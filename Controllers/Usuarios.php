@@ -9,10 +9,10 @@ class Usuarios extends Controller
         $this->id_usuario = $_COOKIE['id'] ?? null;
         $this->correo = $_COOKIE['correo'] ?? null;
         ##validar sesion
-        if (empty($_SESSION['id'])){
-                header('location: ' . BASE_URL);
-                exit;
-            }
+        if (empty($_SESSION['id'])) {
+            header('location: ' . BASE_URL);
+            exit;
+        }
     }
     public function index()
     {
@@ -168,10 +168,10 @@ class Usuarios extends Controller
     public function cambiarProfile()
     {
         if (empty($this->id_usuario)) {
-        $res = array('tipo' => 'error', 'mensaje' => 'Usuario no autenticado o sesión expirada');
-        echo json_encode($res, JSON_UNESCAPED_UNICODE);
-        die();
-    }
+            $res = array('tipo' => 'error', 'mensaje' => 'Usuario no autenticado o sesión expirada');
+            echo json_encode($res, JSON_UNESCAPED_UNICODE);
+            die();
+        }
         $correo = $_POST['correo'] ?? null;
         $nombre = $_POST['nombre'] ?? null;
         $apellido = $_POST['apellido'] ?? null;
@@ -195,6 +195,9 @@ class Usuarios extends Controller
     public function Salir()
     {
         session_destroy();
+        foreach ($_COOKIE as $key => $val) {
+            setcookie($key, '', time() - 3600, '/');
+        }
         header('Location: ' . BASE_URL);
     }
 }

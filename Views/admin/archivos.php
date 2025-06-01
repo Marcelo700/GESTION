@@ -46,4 +46,3 @@
 
 <?php include_once 'Views\template\footer.php'; ?>
 
-<!-- parte de adentro de las carpetas -->

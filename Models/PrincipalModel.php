@@ -23,6 +23,13 @@ class PrincipalModel extends Query{
 
     }
 
+    public function cambiarPass($clave, $token)
+    {
+        $sql = "UPDATE usuarios SET clave= ?, token = ? WHERE token = ?";
+        return $this->save($sql, [$clave, null, $token]);
+
+    }
+
 }
 
 ?>

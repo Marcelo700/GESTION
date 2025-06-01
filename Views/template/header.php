@@ -107,37 +107,11 @@
                                     <a class="nav-link toggle-search" href="#"><i class="material-icons">search</i></a>
                                 </li>
                                 <li class="nav-item hidden-on-mobile">
-                                    <a class="nav-link nav-notifications-toggle" id="notificationsDropDown" href="#" data-bs-toggle="dropdown">4</a>
-                                    <div class="dropdown-menu dropdown-menu-end notifications-dropdown" aria-labelledby="notificationsDropDown">
-                                        <h6 class="dropdown-header">Perfil</h6>
-                                        <div class="notifications-dropdown-list">
-                                            <a href="<?php echo BASE_URL . 'usuarios/profile'; ?>">
-                                                <div class="notifications-dropdown-item">
-                                                    <div class="notifications-dropdown-item-image">
-                                                        <span class="notifications-badge">
-                                                            <img src="<?php echo BASE_URL . 'Assets/images/perfil.png'; ?>" alt="">
-                                                        </span>
-                                                    </div>
-                                                    <div class="notifications-dropdown-item-text">
-                                                        <p style="margin-top: 11px;">Perfil</p>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="<?php echo BASE_URL . 'usuarios/salir' ?>">
-                                                <div class="notifications-dropdown-item">
-                                                    <div class="notifications-dropdown-item-image">
-                                                        <span class="notifications-badge">
-                                                            <img src="<?php echo BASE_URL . 'Assets/images/exit2.png'; ?>" alt="">
-                                                        </span>
-                                                    </div>
-                                                    <div class="notifications-dropdown-item-text">
-                                                        <p style="margin-top: 11px;">Salir</p>
-                                                    </div>
-                                                </div>
-                                            </a>
-
-                                        </div>
-                                    </div>
+                                    <a class="nav-link language-dropdown-toggle" href="#" id="languageDropDown" data-bs-toggle="dropdown"><img src="<?php echo BASE_URL . 'Assets/images/logo.png'; ?>" alt=""></a>
+                                    <ul class="dropdown-menu dropdown-menu-end language-dropdown" aria-labelledby="languageDropDown">
+                                        <li><a class="dropdown-item" href="<?php echo BASE_URL . 'usuarios/profile'; ?>"><img src="Assets/images/perfil.png" alt="">Perfil</a></li>
+                                        <li><a class="dropdown-item" href="<?php echo BASE_URL . 'usuarios/salir' ?>"><img src="Assets/images/exit2.png" alt="">Salir</a></li>
+                                    </ul>
                                 </li>
                             </ul>
                         </div>

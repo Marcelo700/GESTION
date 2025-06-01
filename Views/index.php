@@ -1,3 +1,12 @@
+<?php
+if (isset($_COOKIE['id'])) {
+    $_SESSION["nombre"] = $_COOKIE['nombre'];
+    $_SESSION["correo"] = $_COOKIE['correo'];
+    $_SESSION["id"] = $_COOKIE['id'];
+    header("Location: http://localhost/gestion/admin");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +17,7 @@
     <meta name="description" content="Responsive Admin Dashboard Template">
     <meta name="keywords" content="admin,dashboard">
     <meta name="author" content="stacks">
-  
+
 
     <!-- Title -->
     <title><?php echo $data['title']; ?></title>
@@ -91,9 +100,9 @@
     <script src="<?php echo BASE_URL . 'Assets/plugins/pace/pace.min.js'; ?>"></script>
     <script src="<?php echo BASE_URL . 'Assets/js/main.min.js'; ?>"></script>
     <script src="<?php echo BASE_URL . 'Assets/js/sweetalert2@11.js'; ?>"></script>
-    <script src="<?php echo BASE_URL . 'Assets/js/custom.js'; ?>"></script>
+    <script src="<?php echo BASE_URL . 'Assets/js/alertas.js'; ?>"></script>
     <script>
-        const base_url= '<?php echo BASE_URL; ?>';
+        const base_url = '<?php echo BASE_URL; ?>';
     </script>
     <script src="<?php echo BASE_URL . 'Assets/js/pages/login.js'; ?>"></script>
 </body>

@@ -54,32 +54,59 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })
 
-    btnreset.addEventListener('click', function(){
+    btnreset.addEventListener('click', function () {
         inputReset.value = '';
         myModal.show();
     })
 
 
 
-    btnProcesar.addEventListener('click', function(){
-        if (inputReset.value == '') {
-            alertaPerzonalizada('success', 'INGRESE EL CORREO ')
-        } else {
-            const http = new XMLHttpRequest();
-            const url = base_url + 'principal/enviarCorreo/' + inputReset.value;
-            http.open("GET", url, true);
-            http.send();
-            http.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    console.log(this.responseText);
-                    // const res = JSON.parse(this.responseText);
-                    // alertaPerzonalizada(res.tipo, res.mensaje);
-                    // if (res.tipo == 'success') {
-                    // }
+    btnProcesar.addEventListener('click', function () {
+        const correo = inputReset.value.trim();
 
-                }
-
-            };
+        if (correo === '') {
+            alertaPerzonalizada('error', 'Por favor, ingrese el correo electrónico');
+            return; // Salir para no hacer la petición
         }
-    })
+
+        // Opcional: Validar formato básico de correo
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(correo)) {
+            alertaPerzonalizada('error', 'Ingrese un correo electrónico válido');
+            return;
+        }
+
+        // Crear solicitud HTTP
+        const http = new XMLHttpRequest();
+        const url = base_url + 'principal/enviarCorreo/' + inputReset.value;
+        http.open("GET", url, true);
+
+        // Opcional: Deshabilitar botón para evitar múltiples clics
+        btnProcesar.disabled = true;
+
+        http.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                btnProcesar.disabled = false; // Rehabilitar botón
+
+                if (this.status === 200) {
+                    try {
+                        const res = JSON.parse(this.responseText);
+                        alertaPerzonalizada(res.tipo, res.mensaje);
+                        if (res.tipo === 'success') {
+                            // Aquí puedes agregar acción extra si quieres, por ejemplo limpiar input
+                            inputReset.value = '';
+                            myModal.hide();
+                        }
+                    } catch (error) {
+                        alertaPerzonalizada('error', 'Error en la respuesta del servidor');
+                    }
+                } else {
+                    alertaPerzonalizada('error', 'Error al conectar con el servidor');
+                }
+            }
+        };
+
+        http.send();
+    });
+
 })

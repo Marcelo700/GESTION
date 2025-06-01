@@ -50,52 +50,155 @@ class Principal extends Controller
 
     public function enviarCorreo($correo)
     {
-
         $consulta = $this->model->getUsuario($correo);
+
         if (!empty($consulta)) {
             $mail = new PHPMailer(true);
-        try {
-            $token = md5(date('YmdHis'));
-            $this->model->updateToken($token, $correo);
-            //Server settings
-            $mail->SMTPDebug = 0;                      //Enable verbose debug output
-            $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'katomogollon@gmail.com';                     //SMTP username
-            $mail->Password   = 'zgoxororohqpqgdx';                               //SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            try {
+                $token = md5(date('YmdHis'));
+                $this->model->updateToken($token, $correo);
 
-            //Recipients
-            $mail->setFrom('katomogollon@gmail.com', 'marcelo alburqueque');
-            $mail->addAddress($correo); 
+                $mail->SMTPDebug = 0;
+                $mail->isSMTP();
+                $mail->Host       = 'smtp.gmail.com';
+                $mail->SMTPAuth   = true;
+                $mail->Username   = 'katomogollon@gmail.com';
+                $mail->Password   = 'zgoxororohqpqgdx';  // Mejor usar variable de entorno
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+                $mail->Port       = 465;
+                $mail->CharSet    = 'UTF-8';
 
-            //Content
-            $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'Restablecer Clave';
-            $mail->Body    = 'Has pedido restablcer tu contraseña, si no has sido tu omite este mensaje <br><a href="'. BASE_URL .'principal/reset/'.$token.'">CLICK AQUI PARA CAMBIAR CONTRASEÑA</a>';
-            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+                $mail->SMTPOptions = [
+                    'ssl' => [
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true,
+                    ],
+                ];
 
-            $mail->send();
-            echo 'Message has been sent';
-        } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                $mail->setFrom('katomogollon@gmail.com', 'Marcelo Alburqueque');
+                $mail->addAddress($correo);
+
+                $mail->isHTML(true);
+                $mail->Subject = 'Restablecer Clave';
+
+                // Cuerpo HTML mejorado
+                $mail->Body = '
+            <html>
+            <head>
+              <style>
+                .container {
+                  font-family: Arial, sans-serif;
+                  max-width: 600px;
+                  margin: 0 auto;
+                  padding: 20px;
+                  background-color: #f5f7fa;
+                  border-radius: 8px;
+                  color: #333333;
+                }
+                .header {
+                  font-size: 24px;
+                  font-weight: bold;
+                  color: #0d6efd;
+                  margin-bottom: 10px;
+                }
+                .content {
+                  font-size: 16px;
+                  line-height: 1.5;
+                  margin-bottom: 20px;
+                }
+                .button {
+                  display: inline-block;
+                  padding: 12px 25px;
+                  font-size: 16px;
+                  color: white !important;
+                  background-color: #0d6efd;
+                  text-decoration: none;
+                  border-radius: 5px;
+                  font-weight: bold;
+                }
+                .footer {
+                  margin-top: 30px;
+                  font-size: 12px;
+                  color: #888888;
+                }
+              </style>
+            </head>
+            <body>
+              <div class="container">
+                <div class="header">Restablecer tu contraseña</div>
+                <div class="content">
+                  Hola,<br><br>
+                  Hemos recibido una solicitud para restablecer la contraseña de tu cuenta.<br>
+                  Si no has realizado esta solicitud, puedes ignorar este correo con seguridad.<br><br>
+                  Para cambiar tu contraseña, haz clic en el botón de abajo:
+                </div>
+                <a href="' . BASE_URL . 'principal/reset/' . $token . '" class="button" target="_blank">Cambiar contraseña</a>
+              </div>
+            </body>
+            </html>
+            ';
+
+                // Versión texto plano
+                $mail->AltBody = "Hola,\n\n" .
+                    "Hemos recibido una solicitud para restablecer la contraseña de tu cuenta.\n" .
+                    "Si no has realizado esta solicitud, puedes ignorar este correo con seguridad.\n\n" .
+                    "Para cambiar tu contraseña, visita el siguiente enlace:\n" .
+                    BASE_URL . "principal/reset/" . $token . "\n\n" .
+                    "Si no solicitaste este correo, no es necesario que hagas nada.";
+
+                $mail->send();
+                $res = array('tipo' => 'success', 'mensaje' => 'CORREO ENVIADO CON UN TOKEN DE SEGURIDAD');
+            } catch (Exception $e) {
+                // Manejo de errores en el envío del correo
+                $res = array('tipo' => 'error', 'mensaje' => 'No se pudo enviar el correo. Error: ' . $mail->ErrorInfo);
+            }
+        } else {
+            // Si el correo no existe en la base de datos
+            $res = array('tipo' => 'warning', 'mensaje' => 'El correo no existe en la base de datos.');
         }
-        }else{
-            $res = array('tipo' => 'warning', 'mensaje' => 'EL CORREO NO EXISTE');
-        }
+
+        // Responder con la respuesta JSON
+        echo json_encode($res, JSON_UNESCAPED_UNICODE);
+        die();
     }
+
 
     public function reset($token)
     {
         $data['title'] = 'Reestablecer clave';
         $data['usuarios'] = $this->model->getToken($token);
         if ($data['usuarios']['token'] == $token) {
-           $this->views->getView('principal', 'reset', $data);
-        }else{
+            $this->views->getView('principal', 'reset', $data);
+        } else {
             header('Location: ' .  BASE_URL . 'errorPag');
         }
-        
+    }
+
+    public function cambiarPass()
+    {
+        $nueva = $_POST['clave_nueva'];
+        $confirmar = $_POST['clave_confirmar'];
+        $token = $_POST['token'];
+        if (empty($nueva) || empty($confirmar) || empty($token)) {
+            $res = array('tipo' => 'Warning', 'mensaje' => 'TODOS LOS CAMPOS SON REQUERIDOS');
+        } else {
+            if ($nueva != $confirmar) {
+                $res = array('tipo' => 'Warning', 'mensaje' => 'LAS CONTRASEÑAS NO COINCIDEN');
+            } else {
+                $result = $this->model->getToken($token);
+                if ($token == $result['token']) {
+                    $hash = password_hash($nueva, PASSWORD_DEFAULT);
+                    $data = $this->model->cambiarPass($hash, $token);
+                    if ($data == 1) {
+                        $res = array('tipo' => 'success', 'mensaje' => 'CONTRASEÑA RESTABLECIDA');
+                    } else {
+                        $res = array('tipo' => 'error', 'mensaje' => 'ERROR AL RESTABLECER LA CONTRASEÑA');
+                    }
+                }
+            }
+        }
+        echo json_encode($res, JSON_UNESCAPED_UNICODE);
+        die();
     }
 }
