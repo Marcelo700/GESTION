@@ -19,18 +19,30 @@ class Archivos extends Controller
                 exit;
             }
     }
-    public function index()
+    public function pagina($page)
     {
         $data['title'] = 'Archivos';
         $data['active'] = 'todos';
         $data['script'] = 'file.js';
         $data['shares'] = $this->model->verificarEstado($this->correo);
-        $data['archivos'] = $this->model->getArchivos(1, $this->id_usuario);
-        $carpetas = $this->model->getCarpetas($this->id_usuario);
+
+
+        ##paginacion
+        $pagina = (empty($page)) ? 1 : $page ;
+        $porPagina = 9;
+        $desde = ($pagina - 1) * $porPagina;
+        $carpetas = $this->model->getCarpetas($desde, $porPagina, $this->id_usuario);
+
+
         for ($i = 0; $i < count($carpetas); $i++) {
             $carpetas[$i]['color'] = substr(md5($carpetas[$i]['id']), 0, 6);
             $carpetas[$i]['fecha'] = time_ago(strtotime($carpetas[$i]['fecha_create']));
         }
+
+        ##total carpetas
+        $totalDir = $this->model->getTotalCarpetas($this->id_usuario);
+        $data['total'] = ceil($totalDir['total'] / $porPagina);
+        $data['pagina'] = $pagina;
         $data['carpetas'] = $carpetas;
         $data['menu'] = 'admin';
         $data['shares'] = $this->model->verificarEstado($this->correo); 

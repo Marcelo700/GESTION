@@ -8,10 +8,7 @@
                 <div class="col">
                     <div class="page-description d-flex align-items-center">
                         <div class="page-description-content flex-grow-1">
-                            <h1>File Manager</h1>
-                        </div>
-                        <div class="page-description-actions">
-                            <a href="#" class="btn btn-primary" id="btnUpload"><i class="material-icons">add</i>Cargar archivo</a>
+                            <h1><?php echo $data['carpeta']['nombre'];?></h1>
                         </div>
                     </div>
                 </div>

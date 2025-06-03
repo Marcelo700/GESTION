@@ -8,7 +8,7 @@ class AdminModel extends Query
 
     public function getCarpetas($id_usuario)
     {
-        $sql = "SELECT * FROM carpetas WHERE id_usuario = $id_usuario AND estado = 1 AND id != 1 ORDER BY id DESC LIMIT 6";
+        $sql = "SELECT * FROM carpetas WHERE id_usuario = $id_usuario AND estado = 1 AND id != 1 ORDER BY id DESC LIMIT 4";
         return $this->selectAll($sql);
     }
 
