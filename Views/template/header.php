@@ -109,8 +109,9 @@
                                 <li class="nav-item hidden-on-mobile">
                                     <a class="nav-link language-dropdown-toggle" href="#" id="languageDropDown" data-bs-toggle="dropdown"><img src="<?php echo BASE_URL . 'Assets/images/logo.png'; ?>" alt=""></a>
                                     <ul class="dropdown-menu dropdown-menu-end language-dropdown" aria-labelledby="languageDropDown">
-                                        <li><a class="dropdown-item" href="<?php echo BASE_URL . 'usuarios/profile'; ?>"><img src="Assets/images/perfil.png" alt="">Perfil</a></li>
-                                        <li><a class="dropdown-item" href="<?php echo BASE_URL . 'usuarios/salir' ?>"><img src="Assets/images/exit2.png" alt="">Salir</a></li>
+                                        <li><a class="dropdown-item" href="<?php echo BASE_URL . 'usuarios/profile'; ?>"><img src="<?php echo BASE_URL .'Assets/images/perfil.png'?>" alt="">Perfil</a></li>
+                                        <li><a class="dropdown-item" href="<?php echo BASE_URL . 'usuarios/salir' ?>"><img src="<?php echo BASE_URL .'Assets/images/exit2.png'?>" alt="">Salir</a></li>
+
                                     </ul>
                                 </li>
                             </ul>
