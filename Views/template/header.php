@@ -56,18 +56,21 @@
                     <li class="sidebar-title">
                         Apps
                     </li>
-                    <li class="<?php echo ($data['menu'] == 'usuarios') ? 'active-page' : ''; ?>">
-                        <a href="<?php echo BASE_URL . 'usuarios'; ?>" class="<?php echo ($data['menu'] == 'usuarios') ? 'active' : ''; ?>">
+                    <li class="<?php echo (isset($data['menu']) && $data['menu'] == 'usuarios') ? 'active-page' : ''; ?>">
+                        <a href="<?php echo BASE_URL . 'usuarios'; ?>" class="<?php echo (isset($data['menu']) && $data['menu'] == 'usuarios') ? 'active' : ''; ?>">
                             <i class="material-icons">
                                 people_alt
                             </i>Usuarios
                         </a>
                     </li>
-                    <li class="<?php echo ($data['menu'] == 'share') ? 'active-page' : ''; ?>">
-                        <a href="<?php echo BASE_URL . 'compartidos'; ?>" class="<?php echo ($data['menu'] == 'share') ? 'active' : ''; ?>"><i class="material-icons-two-tone">inbox</i>Compartidos<span class="badge rounded-pill badge-danger float-end"><?php echo $data['shares']['total']; ?></span></a>
+                    <li class="<?php echo (isset($data['menu']) && $data['menu'] == 'share') ? 'active-page' : ''; ?>">
+                        <a href="<?php echo BASE_URL . 'compartidos'; ?>" class="<?php echo (isset($data['menu']) && $data['menu'] == 'share') ? 'active' : ''; ?>"><i class="material-icons-two-tone">inbox</i>Compartidos<span class="badge rounded-pill badge-danger float-end"><?php echo isset($data['shares']['total']) ? $data['shares']['total'] : 0; ?></span></a>
                     </li>
-                    <li class="<?php echo ($data['menu'] == 'admin') ? 'active-page' : ''; ?>">
-                        <a href="<?php echo BASE_URL . 'admin'; ?>" class="<?php echo ($data['menu'] == 'admin') ? 'active' : ''; ?>"><i class="material-icons-two-tone">cloud_queue</i>File Manager</a>
+                    <li class="<?php echo (isset($data['menu']) && $data['menu'] == 'admin') ? 'active-page' : ''; ?>">
+                        <a href="<?php echo BASE_URL . 'admin'; ?>" class="<?php echo (isset($data['menu']) && $data['menu'] == 'admin') ? 'active' : ''; ?>"><i class="material-icons-two-tone">cloud_queue</i>File Manager</a>
+                    </li>
+                    <li class="<?php echo (isset($data['menu']) && $data['menu'] == 'etiquetas') ? 'active-page' : ''; ?>">
+                        <a href="<?php echo BASE_URL . 'etiquetas'; ?>" class="<?php echo (isset($data['menu']) && $data['menu'] == 'etiquetas') ? 'active' : ''; ?>"><i class="material-icons-two-tone">local_offer</i>Etiquetas</a>
                     </li>
                 </ul>
             </div>
