@@ -29,6 +29,7 @@ class Etiquetas extends Controller
                     <i class="material-icons">delete</i>
                 </button>
             </div>';
+            $data[$i]['vincular'] = '<button class="btn btn-success" onclick="abrirModalVincular(' . $data[$i]['id'] . ')"><i class="material-icons">link</i></button>';
         }
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
@@ -124,6 +125,16 @@ class Etiquetas extends Controller
     {
         $data = $this->model->getEtiquetasCarpeta($id_carpeta);
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    public function getCarpetas()
+    {
+        require_once 'Models/AdminModel.php';
+        $adminModel = new AdminModel();
+        $id_usuario = $_SESSION['id'];
+        $carpetas = $adminModel->getCarpetas($id_usuario);
+        echo json_encode($carpetas, JSON_UNESCAPED_UNICODE);
         die();
     }
 }

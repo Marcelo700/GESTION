@@ -63,6 +63,7 @@
                     <button type="button" id="btnSubir" class="btn btn-outline-primary m-r-xs"><i class="material-icons">folder_zip</i>Subir archivo</button>
                     <hr>
                     <button type="button" id="btnCompartir" class="btn btn-outline-success m-r-xs"><i class="material-icons">share</i>Compartir</button>
+                    <button type="button" id="btnEtiquetasCarpeta" class="btn btn-outline-warning m-r-xs"><i class="material-icons">local_offer</i> Etiquetas</button>
                 </div>
             </div>
         </div>
@@ -109,6 +110,32 @@
                     <button type="submit" class="btn btn-outline-primary">Compartir</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Etiquetas para Carpeta -->
+<div id="modalEtiquetasCarpeta" class="modal fade" tabindex="-1" aria-labelledby="modal-etiquetas-carpeta-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-etiquetas-carpeta-label">Vincular Etiquetas a Carpeta</h5>
+                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmEtiquetasCarpeta">
+                    <input type="hidden" id="idCarpetaEtiquetas">
+                    <div class="mb-3">
+                        <label for="selectEtiquetasCarpeta" class="form-label">Selecciona etiquetas</label>
+                        <select class="form-select" id="selectEtiquetasCarpeta" name="etiquetas[]" multiple>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="vincularEtiquetasACarpeta()">Vincular</button>
+            </div>
         </div>
     </div>
 </div>

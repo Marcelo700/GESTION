@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     return `<span class="badge" style="background-color: ${data}">${data}</span>`;
                 }
             },
-            { data: 'acciones' }
+            { data: 'acciones' },
+            { data: 'vincular' }
         ],
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
@@ -186,4 +187,48 @@ function getEtiquetasCarpeta(id_carpeta) {
         console.log(data);
     })
     .catch(error => console.log(error));
+}
+
+// Función para abrir el modal de vinculación
+function abrirModalVincular(idEtiqueta) {
+    document.querySelector('#idEtiquetaVincular').value = idEtiqueta;
+    const selectCarpeta = document.querySelector('#selectCarpeta');
+    selectCarpeta.innerHTML = '<option value="">Cargando carpetas...</option>';
+    fetch(base_url + 'etiquetas/getCarpetas')
+        .then(response => response.json())
+        .then(data => {
+            let options = '<option value="">Selecciona una carpeta</option>';
+            data.forEach(carpeta => {
+                options += `<option value="${carpeta.id}">${carpeta.nombre}</option>`;
+            });
+            selectCarpeta.innerHTML = options;
+        });
+    const modal = new bootstrap.Modal(document.querySelector('#modalVincular'));
+    modal.show();
+}
+
+// Función para vincular etiqueta a carpeta
+function vincularEtiquetaCarpeta() {
+    const idEtiqueta = document.querySelector('#idEtiquetaVincular').value;
+    const idCarpeta = document.querySelector('#selectCarpeta').value;
+    if (!idCarpeta) {
+        Swal.fire({ icon: 'warning', title: 'Aviso', text: 'Selecciona una carpeta' });
+        return;
+    }
+    const formData = new FormData();
+    formData.append('id_etiqueta', idEtiqueta);
+    formData.append('id_carpeta', idCarpeta);
+    fetch(base_url + 'etiquetas/asignarEtiqueta', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        Swal.fire({ icon: data.tipo, title: 'Aviso', text: data.mensaje, timer: 1500 });
+        if (data.tipo === 'success') {
+            const modal = document.querySelector('#modalVincular');
+            const modalInstance = bootstrap.Modal.getInstance(modal);
+            modalInstance.hide();
+        }
+    });
 } 

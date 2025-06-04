@@ -38,6 +38,23 @@ const btnverDetalle = document.querySelector('#btnverDetalle');
 
 let container_progress = document.querySelector('#container_progress');
 
+// Vincular etiquetas a carpeta
+let carpetaActual = null;
+const btnEtiquetasCarpeta = document.querySelector('#btnEtiquetasCarpeta');
+const modalEtiquetasCarpeta = document.querySelector('#modalEtiquetasCarpeta');
+const selectEtiquetasCarpeta = document.querySelector('#selectEtiquetasCarpeta');
+const idCarpetaEtiquetas = document.querySelector('#idCarpetaEtiquetas');
+
+const etiquetasVinculadasContainer = document.createElement('div');
+etiquetasVinculadasContainer.className = 'mb-2';
+if (modalEtiquetasCarpeta) {
+    // Insertar el contenedor de chips antes del select si no existe
+    const form = modalEtiquetasCarpeta.querySelector('form');
+    if (form && !form.querySelector('.chips-etiquetas-vinculadas')) {
+        etiquetasVinculadasContainer.classList.add('chips-etiquetas-vinculadas');
+        form.insertBefore(etiquetasVinculadasContainer, form.querySelector('.mb-3'));
+    }
+}
 
 document.addEventListener('DOMContentLoaded', function () {
     btnUpload.addEventListener('click', function () {
@@ -203,6 +220,15 @@ document.addEventListener('DOMContentLoaded', function () {
             eliminarRegistro('ESTA SEGURO DE ELIMINAR', 'EL ARCHIVO SE ELIMINARA DE FORMA PERMANENTE EN 30 DIAS', 'SI ELIMINAR', url, null)
         })
     });
+
+    if (btnEtiquetasCarpeta) {
+        btnEtiquetasCarpeta.addEventListener('click', function () {
+            idCarpetaEtiquetas.value = document.querySelector('#id_carpeta').value;
+            cargarEtiquetasCarpeta();
+            const modal = new bootstrap.Modal(modalEtiquetasCarpeta);
+            modal.show();
+        });
+    }
 })
 
 function compartirArchivo(id) {
@@ -259,3 +285,105 @@ function verArchivos() {
         }
     };
 }
+
+function cargarEtiquetasCarpeta() {
+    etiquetasVinculadasContainer.innerHTML = '<span class="text-muted">Cargando etiquetas vinculadas...</span>';
+    selectEtiquetasCarpeta.innerHTML = '<option value="">Cargando etiquetas...</option>';
+    fetch(base_url + 'etiquetas/getEtiquetasCarpeta/' + idCarpetaEtiquetas.value)
+        .then(response => response.json())
+        .then(vinculadas => {
+            // Mostrar chips con botón de desvincular
+            if (vinculadas.length > 0) {
+                etiquetasVinculadasContainer.innerHTML = vinculadas.map(e =>
+                    `<span class='badge bg-primary me-1 mb-1'>${e.nombre}
+                        <button type='button' class='btn btn-sm btn-close btn-close-white ms-1' style='font-size:10px;vertical-align:middle' title='Quitar' onclick='desvincularEtiquetaCarpeta(${e.id_relacion})'></button>
+                    </span>`
+                ).join(' ');
+            } else {
+                etiquetasVinculadasContainer.innerHTML = '<span class="text-muted">Sin etiquetas vinculadas</span>';
+            }
+            // Obtener todas las etiquetas
+            fetch(base_url + 'etiquetas/listar')
+                .then(response => response.json())
+                .then(etiquetas => {
+                    // Filtrar solo las NO vinculadas
+                    const idsVinculadas = vinculadas.map(e => e.id);
+                    let options = '';
+                    etiquetas.forEach(etiqueta => {
+                        if (!idsVinculadas.includes(etiqueta.id)) {
+                            options += `<option value="${etiqueta.id}">${etiqueta.nombre}</option>`;
+                        }
+                    });
+                    selectEtiquetasCarpeta.innerHTML = options || '<option value="">No hay etiquetas disponibles</option>';
+                });
+        });
+}
+
+function desvincularEtiquetaCarpeta(id_relacion) {
+    Swal.fire({
+        title: '¿Quitar etiqueta?',
+        text: 'Esta acción desvinculará la etiqueta de la carpeta.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, quitar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(base_url + 'etiquetas/quitarEtiqueta/' + id_relacion)
+                .then(response => response.json())
+                .then(data => {
+                    Swal.fire({ icon: data.tipo, title: 'Aviso', text: data.mensaje, timer: 1500 });
+                    cargarEtiquetasCarpeta();
+                });
+        }
+    });
+}
+
+// --- FUNCIONES GLOBALES PARA VINCULAR Y DESVINCULAR ETIQUETAS ---
+function vincularEtiquetasACarpeta() {
+    const idCarpeta = idCarpetaEtiquetas.value;
+    const etiquetas = Array.from(selectEtiquetasCarpeta.selectedOptions).map(opt => opt.value);
+    if (!idCarpeta || etiquetas.length === 0) {
+        Swal.fire({ icon: 'warning', title: 'Aviso', text: 'Selecciona al menos una etiqueta' });
+        return;
+    }
+    let promesas = etiquetas.map(id_etiqueta => {
+        const formData = new FormData();
+        formData.append('id_etiqueta', id_etiqueta);
+        formData.append('id_carpeta', idCarpeta);
+        return fetch(base_url + 'etiquetas/asignarEtiqueta', {
+            method: 'POST',
+            body: formData
+        }).then(response => response.json());
+    });
+    Promise.all(promesas).then(results => {
+        let success = results.some(r => r.tipo === 'success');
+        Swal.fire({ icon: success ? 'success' : 'error', title: 'Aviso', text: success ? 'Etiquetas vinculadas' : 'Error al vincular' });
+        const modal = bootstrap.Modal.getInstance(modalEtiquetasCarpeta);
+        modal.hide();
+        cargarEtiquetasCarpeta();
+    });
+}
+
+function desvincularEtiquetaCarpeta(id_relacion) {
+    Swal.fire({
+        title: '¿Quitar etiqueta?',
+        text: 'Esta acción desvinculará la etiqueta de la carpeta.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, quitar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(base_url + 'etiquetas/quitarEtiqueta/' + id_relacion)
+                .then(response => response.json())
+                .then(data => {
+                    Swal.fire({ icon: data.tipo, title: 'Aviso', text: data.mensaje, timer: 1500 });
+                    cargarEtiquetasCarpeta();
+                });
+        }
+    });
+}
+
+window.vincularEtiquetasACarpeta = vincularEtiquetasACarpeta;
+window.desvincularEtiquetaCarpeta = desvincularEtiquetaCarpeta;
