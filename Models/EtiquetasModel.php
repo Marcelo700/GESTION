@@ -68,5 +68,12 @@ class EtiquetasModel extends Query
                 WHERE er.id_carpeta = $id_carpeta";
         return $this->selectAll($sql);
     }
+
+    public function getEtiquetaPorNombre($nombre)
+    {
+        $sql = "SELECT * FROM etiquetas WHERE nombre = ?";
+        $datos = array($nombre);
+        return $this->select($sql, $datos);
+    }
 }
 ?> 

@@ -92,7 +92,55 @@ class Admin extends Controller
                 mkdir($carpeta);
             }
             move_uploaded_file($tmp, $carpeta . '/' . $name);
-            $res = array('tipo' => 'success', 'mensaje' => 'ARCHIVO SUBIDO CORRECTAMENTE');
+            $id_archivo = $data; // ID del archivo insertado
+
+            // --- INTEGRACIÓN OPENAI ---
+            require_once __DIR__ . '/../openai_helper.php';
+            $ruta_guardado = $carpeta . '/' . $name;
+            list($etiquetas, $carpetaSugerida) = obtenerEtiquetasYCarpetaOpenAI($ruta_guardado, $name);
+
+            // 1. Crear carpeta sugerida si no existe
+            $id_carpeta_sugerida = $id_carpeta;
+            if ($carpetaSugerida && strtolower($carpetaSugerida) !== strtolower($this->model->getCarpeta($id_carpeta)['nombre'])) {
+                // Buscar si existe carpeta con ese nombre
+                $adminModel = $this->model;
+                $carpeta_existente = $adminModel->getVerificar('nombre', $carpetaSugerida, $this->id_usuario, 0);
+                if (empty($carpeta_existente)) {
+                    $id_carpeta_sugerida = $adminModel->crearcarpeta($carpetaSugerida, $this->id_usuario);
+                } else {
+                    $carpeta_info = $adminModel->getVerificar('nombre', $carpetaSugerida, $this->id_usuario, 0);
+                    $id_carpeta_sugerida = $carpeta_info['id'];
+                }
+            }
+
+            // 2. Mover archivo si la carpeta sugerida es diferente
+            if ($id_carpeta != $id_carpeta_sugerida) {
+                $nuevo_destino = $destino . '/' . $id_carpeta_sugerida;
+                if (!file_exists($nuevo_destino)) {
+                    mkdir($nuevo_destino);
+                }
+                rename($ruta_guardado, $nuevo_destino . '/' . $name);
+                // Actualizar en la base de datos el id_carpeta del archivo
+                $this->model->actualizarCarpetaArchivo($id_archivo, $id_carpeta_sugerida);
+            }
+
+            // 3. Crear etiquetas si no existen y vincularlas a la carpeta y al archivo
+            require_once __DIR__ . '/../Models/EtiquetasModel.php';
+            $etiquetasModel = new EtiquetasModel();
+            foreach ($etiquetas as $etiqueta) {
+                // Buscar o crear etiqueta
+                $etiqueta_existente = $etiquetasModel->getEtiquetaPorNombre($etiqueta);
+                if (empty($etiqueta_existente)) {
+                    $id_etiqueta = $etiquetasModel->registrar($etiqueta, '#563d7c'); // color por defecto
+                } else {
+                    $id_etiqueta = $etiqueta_existente['id'];
+                }
+                // Vincular etiqueta a carpeta y archivo
+                $etiquetasModel->asignarEtiqueta($id_etiqueta, null, $id_carpeta_sugerida);
+                $etiquetasModel->asignarEtiqueta($id_etiqueta, $id_archivo, null);
+            }
+
+            $res = array('tipo' => 'success', 'mensaje' => 'ARCHIVO SUBIDO Y CLASIFICADO CON OPENAI');
         } else {
             $res = array('tipo' => 'error', 'mensaje' => 'ERROR AL SUBIR EL ARCHIVO');
         }
