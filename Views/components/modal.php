@@ -1,3 +1,23 @@
+<div id="modalArchivos" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="title-file" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">SUBIR ARCHIVO</h5>
+                <button class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <form id="upload-form" class="dropzone" action="<?php echo BASE_URL . 'admin/subirarchivos'; ?>">
+                    <input type="hidden" id="id_carpeta" name="id_carpeta">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" id="btnProcesar">Procesar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div id="modalFile" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="title-file" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
@@ -56,7 +76,6 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input type="hidden" id="id_carpeta">
                 <div class="d-grid">
                     <a href="#" id="btnVer" class="btn btn-outline-info m-r-xs"><i class="material-icons">folder_zip</i>ver</a>
                     <hr>
@@ -93,7 +112,7 @@
                             <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
                                     <div id="container_archivos">
-                                        
+
                                     </div>
                                 </div>
                             </div>

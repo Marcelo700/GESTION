@@ -12,7 +12,7 @@ class Admin extends Controller
             $_SESSION["nombre"] = $_COOKIE['nombre'];
             $_SESSION["correo"] = $_COOKIE['correo'];
             ## validar sesion
-            if (empty($_SESSION['id'])){
+            if (empty($_SESSION['id'])) {
                 header('location: ' . BASE_URL);
                 exit;
             }
@@ -31,9 +31,14 @@ class Admin extends Controller
                 }
             }
         } else {
+<<<<<<< Updated upstream
             header("Location: http://localhost/gestion/");
+=======
+            header("Location: http://localhost:80/gestion/");
+>>>>>>> Stashed changes
         }
     }
+
     public function index()
     {
         $data['title'] = 'Panel de administracion';
@@ -77,6 +82,7 @@ class Admin extends Controller
     public function subirArchivos()
     {
         $id_carpeta = (empty($_POST['id_carpeta'])) ? 1 : $_POST['id_carpeta'];
+<<<<<<< Updated upstream
         $archivo = $_FILES['file'];
         $name = $archivo['name'];
         $tmp = $archivo['tmp_name'];
@@ -95,7 +101,85 @@ class Admin extends Controller
             $res = array('tipo' => 'success', 'mensaje' => 'ARCHIVO SUBIDO CORRECTAMENTE');
         } else {
             $res = array('tipo' => 'error', 'mensaje' => 'ERROR AL SUBIR EL ARCHIVO');
+=======
+        $archivos = $_FILES['file'];
+        $destino = 'Assets/archivos';
+        if (!file_exists($destino)) {
+            mkdir($destino);
+>>>>>>> Stashed changes
         }
+        $carpeta = $destino . '/' . $id_carpeta;
+        if (!file_exists($carpeta)) {
+            mkdir($carpeta);
+        }
+        for ($i = 0; $i < count($archivos['name']); $i++) {
+            $name = $archivos['name'][$i];
+            $tmp = $archivos['tmp_name'][$i];
+            $tipo = $archivos['type'][$i];
+            $data = $this->model->subirArchivos($name, $tipo, $id_carpeta, $this->id_usuario);
+            if ($data > 0) {
+                move_uploaded_file($tmp, $carpeta . '/' . $name);
+                $id_archivo = $data; // ID del archivo insertado
+
+                // --- INTEGRACIÓN OPENAI ---
+                require_once __DIR__ . '/../openai_helper.php';
+                $ruta_guardado = $carpeta . '/' . $name;
+                list($etiquetas, $carpetaSugerida) = obtenerEtiquetasYCarpetaOpenAI($ruta_guardado, $name);
+
+                // 1. Crear carpeta sugerida si no existe
+                $id_carpeta_sugerida = $id_carpeta;
+                if ($carpetaSugerida && strtolower($carpetaSugerida) !== strtolower($this->model->getCarpeta($id_carpeta)['nombre'])) {
+                    // Buscar si existe carpeta con ese nombre
+                    $adminModel = $this->model;
+                    $carpeta_existente = $adminModel->getVerificar('nombre', $carpetaSugerida, $this->id_usuario, 0);
+                    if (empty($carpeta_existente)) {
+                        $id_carpeta_sugerida = $adminModel->crearcarpeta($carpetaSugerida, $this->id_usuario);
+                    } else {
+                        $carpeta_info = $adminModel->getVerificar('nombre', $carpetaSugerida, $this->id_usuario, 0);
+                        $id_carpeta_sugerida = $carpeta_info['id'];
+                    }
+                }
+
+                // 2. Mover archivo si la carpeta sugerida es diferente
+                if ($id_carpeta != $id_carpeta_sugerida) {
+                    $nuevo_destino = $destino . '/' . $id_carpeta_sugerida;
+                    if (!file_exists($nuevo_destino)) {
+                        mkdir($nuevo_destino);
+                    }
+                    rename($ruta_guardado, $nuevo_destino . '/' . $name);
+                    // Actualizar en la base de datos el id_carpeta del archivo
+                    $this->model->actualizarCarpetaArchivo($id_archivo, $id_carpeta_sugerida);
+                }
+
+                // 3. Crear etiquetas si no existen y vincularlas a la carpeta y al archivo
+                require_once __DIR__ . '/../Models/EtiquetasModel.php';
+                $etiquetasModel = new EtiquetasModel();
+                foreach ($etiquetas as $etiqueta) {
+                    // Buscar o crear etiqueta
+                    $etiqueta_existente = $etiquetasModel->getEtiquetaPorNombre($etiqueta);
+                    if (empty($etiqueta_existente)) {
+                        $id_etiqueta = $etiquetasModel->registrar($etiqueta, '#563d7c'); // color por defecto
+                    } else {
+                        $id_etiqueta = $etiqueta_existente['id'];
+                    }
+                    // Vincular etiqueta a carpeta y archivo
+                    $etiquetasModel->asignarEtiqueta($id_etiqueta, null, $id_carpeta_sugerida);
+                    $etiquetasModel->asignarEtiqueta($id_etiqueta, $id_archivo, null);
+                }
+
+                $respuesta = $data;
+            } else {
+                $respuesta = 0;
+            }
+
+            if ($respuesta > 0) {
+
+                $res = array('tipo' => 'success', 'mensaje' => 'ARCHIVO SUBIDO Y CLASIFICADO CON OPENAI');
+            } else {
+                $res = array('tipo' => 'error', 'mensaje' => 'ERROR AL SUBIR EL ARCHIVO');
+            }
+        }
+
         echo json_encode($res, JSON_UNESCAPED_UNICODE);
         die();
     }

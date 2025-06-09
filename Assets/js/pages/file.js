@@ -1,17 +1,16 @@
 const btnUpload = document.querySelector('#btnUpload')
 const btnNuevacarpeta = document.querySelector("#btnNuevacarpeta");
-const modalFile = document.querySelector("#modalFile");
-const myModal = new bootstrap.Modal(modalFile);
+const myModal = new bootstrap.Modal(document.querySelector("#modalFile"));
 
-const modalCarpeta = document.querySelector("#modalCarpeta");
-const myModal1 = new bootstrap.Modal(modalCarpeta);
+
+const myModal1 = new bootstrap.Modal(document.querySelector("#modalCarpeta"));
 const frmCarpeta = document.querySelector('#frmCarpeta');
 
 const btnSubirArchivo = document.querySelector("#btnSubirArchivo");
 const file = document.querySelector("#file");
 
-const modalCompartir = document.querySelector("#modalCompartir");
-const myModal2 = new bootstrap.Modal(modalCompartir);
+
+const myModal2 = new bootstrap.Modal(document.querySelector("#modalCompartir"));
 const id_carpeta = document.querySelector('#id_carpeta');
 
 const carpetas = document.querySelectorAll('.carpetas');
@@ -27,8 +26,7 @@ const btnVer = document.querySelector('#btnVer');
 //compartir archivos entre los trabajadores
 
 const compartir = document.querySelectorAll('.compartir');
-const modalUsuarios = document.querySelector("#modalUsuarios");
-const myModalUser = new bootstrap.Modal(modalUsuarios);
+const myModalUser = new bootstrap.Modal(document.querySelector("#modalUsuarios"));
 const frmCompartir = document.querySelector('#frmCompartir');
 const usuarios = document.querySelector('#usuarios');
 
@@ -36,7 +34,7 @@ const btnCompartir = document.querySelector('#btnCompartir');
 const container_archivos = document.querySelector('#container_archivos');
 const btnverDetalle = document.querySelector('#btnverDetalle');
 
-let container_progress = document.querySelector('#container_progress');
+const modalArchivos = new bootstrap.Modal(document.querySelector("#modalArchivos"));
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -79,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //SE SUBEN ARCHIVOS
     btnSubirArchivo.addEventListener('click', function () {
         myModal.hide();
-        file.click();
+        modalArchivos.show();
     })
 
     file.addEventListener('change', function (e) {
@@ -122,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     btnSubir.addEventListener('click', function () {
         myModal2.hide();
-        file.click();
+        modalArchivos.show();
     })
 
     btnVer.addEventListener('click', function () {
@@ -204,6 +202,39 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     });
 })
+
+//iniciar Dropzone
+
+Dropzone.options.uploadForm = { 
+  dictDefaultMessage: 'ARRASTRAR Y SOLTAR ARCHIVOS',
+  dictRemoveFile: 'Eliminar' ,
+  autoProcessQueue: false,
+  uploadMultiple: true,
+  parallelUploads: 10,
+  maxFiles: 10,
+  addRemoveLinks: true,
+
+  // The setting up of the dropzone
+  init: function() {
+    var myDropzone = this;
+
+    // First change the button to actually tell Dropzone to process the queue.
+    document.querySelector("#btnProcesar").addEventListener("click", function(e) {
+      // Make sure that the form isn't actually being sent.
+      e.preventDefault();
+      e.stopPropagation();
+      myDropzone.processQueue();
+    });
+    this.on("successmultiple", function(files, response) {
+        setTimeout(() => {
+            window.location.reload();
+        }, 1500);
+    });
+  }
+ 
+}
+
+//fin Dropzone
 
 function compartirArchivo(id) {
     const http = new XMLHttpRequest();

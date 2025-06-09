@@ -3,7 +3,11 @@ if (isset($_COOKIE['id'])) {
     $_SESSION["nombre"] = $_COOKIE['nombre'];
     $_SESSION["correo"] = $_COOKIE['correo'];
     $_SESSION["id"] = $_COOKIE['id'];
+<<<<<<< Updated upstream
     header("Location: http://localhost/gestion/admin");
+=======
+    header("Location: http://localhost:80/gestion/admin");
+>>>>>>> Stashed changes
 }
 ?>
 
