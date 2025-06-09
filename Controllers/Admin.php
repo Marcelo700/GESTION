@@ -31,11 +31,7 @@ class Admin extends Controller
                 }
             }
         } else {
-<<<<<<< Updated upstream
-            header("Location: http://localhost/gestion/");
-=======
             header("Location: http://localhost:80/gestion/");
->>>>>>> Stashed changes
         }
     }
 
@@ -82,40 +78,19 @@ class Admin extends Controller
     public function subirArchivos()
     {
         $id_carpeta = (empty($_POST['id_carpeta'])) ? 1 : $_POST['id_carpeta'];
-<<<<<<< Updated upstream
-        $archivo = $_FILES['file'];
-        $name = $archivo['name'];
-        $tmp = $archivo['tmp_name'];
-        $tipo = $archivo['type'];
-        $data = $this->model->subirArchivos($name, $tipo, $id_carpeta, $this->id_usuario);
-        if ($data > 0) {
-            $destino = 'Assets/archivos';
-            if (!file_exists($destino)) {
-                mkdir($destino);
-            }
-            $carpeta = $destino . '/' . $id_carpeta;
-            if (!file_exists($carpeta)) {
-                mkdir($carpeta);
-            }
-            move_uploaded_file($tmp, $carpeta . '/' . $name);
-            $res = array('tipo' => 'success', 'mensaje' => 'ARCHIVO SUBIDO CORRECTAMENTE');
-        } else {
-            $res = array('tipo' => 'error', 'mensaje' => 'ERROR AL SUBIR EL ARCHIVO');
-=======
         $archivos = $_FILES['file'];
         $destino = 'Assets/archivos';
         if (!file_exists($destino)) {
             mkdir($destino);
->>>>>>> Stashed changes
         }
         $carpeta = $destino . '/' . $id_carpeta;
         if (!file_exists($carpeta)) {
             mkdir($carpeta);
         }
         for ($i = 0; $i < count($archivos['name']); $i++) {
-            $name = $archivos['name'][$i];
-            $tmp = $archivos['tmp_name'][$i];
-            $tipo = $archivos['type'][$i];
+            $name = $archivos['name'];
+            $tmp = $archivos['tmp_name'];
+            $tipo = $archivos['type'];
             $data = $this->model->subirArchivos($name, $tipo, $id_carpeta, $this->id_usuario);
             if ($data > 0) {
                 move_uploaded_file($tmp, $carpeta . '/' . $name);
@@ -172,7 +147,7 @@ class Admin extends Controller
                 $respuesta = 0;
             }
 
-            if ($respuesta > 0) {
+            if ($res > 0) {
 
                 $res = array('tipo' => 'success', 'mensaje' => 'ARCHIVO SUBIDO Y CLASIFICADO CON OPENAI');
             } else {
