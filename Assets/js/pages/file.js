@@ -80,36 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
         modalArchivos.show();
     })
 
-    file.addEventListener('change', function (e) {
-        console.log(e.target.files[0]);
-        const data = new FormData();
-        data.append('id_carpeta', id_carpeta.value)
-        data.append('file', e.target.files[0])
-        const http = new XMLHttpRequest();
-        const url = base_url + 'admin/subirarchivos';
-        http.open("POST", url, true);
-        http.upload.addEventListener('progress', function (e) {
-            let porcentaje = (e.loaded / e.total) * 100;
-            container_progress.innerHTML = `<div class="progress"><div class="progress-bar" role="progressbar" style="width: ${porcentaje.toFixed(0)}%;" 
-            aria-valuenow="${porcentaje.toFixed(0)}" aria-valuemin="0" aria-valuemax="100">${porcentaje.toFixed(0)}%</div>
-            </div>`;
-        })
-        http.addEventListener('load', function () {
-            setTimeout(() => {
-                window.location.reload();
-            }, 1500);
-        })
-        http.send(data);
-        http.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
-                const res = JSON.parse(this.responseText);
-                alertaPerzonalizada(res.tipo, res.mensaje);
-
-            }
-
-        };
-    })
+    
 
     carpetas.forEach(carpeta => {
         carpeta.addEventListener('click', function (e) {
