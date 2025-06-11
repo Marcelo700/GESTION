@@ -26,6 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function restaurar(id) {
     const url = base_url + 'archivos/delete/' + id;
-    eliminarRegistro('ESTA SEGURO DE restaurar', 'EL ARCHIVO APARECERA EN EL MISMO DIRECTORIO', 'SI RESTAURAR', url, tblarchivos)
+    eliminarRegistro('ESTA SEGURO DE RESTAURAR', 'EL ARCHIVO APARECERA EN EL MISMO DIRECTORIO', 'SI RESTAURAR', url, tblarchivos)
 
 }
