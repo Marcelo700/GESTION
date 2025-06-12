@@ -65,7 +65,7 @@ class AdminModel extends Query
 
     public function getArchivos($id_carpeta, $id_usuario)
     {
-        $sql = "SELECT a.* FROM archivos a INNER JOIN carpetas c ON a.id_carpeta = c.id WHERE a.id_carpeta = $id_carpeta AND c.id_usuario = $id_usuario ORDER BY a.id DESC";
+        $sql = "SELECT a.* FROM archivos a INNER JOIN carpetas c ON a.id_carpeta = c.id WHERE a.id_carpeta = $id_carpeta AND c.id_usuario = $id_usuario AND a.estado = 1 ORDER BY a.id DESC";
         return $this->selectAll($sql);
     }
 

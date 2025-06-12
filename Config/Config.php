@@ -10,7 +10,7 @@ $port = $_SERVER['SERVER_PORT'];
 $port = ($port == '80' || $port == '443') ? '' : ':' . $port;
 
 
-define('BASE_URL', $protocol . $host  . '/gestion/');
+defined('BASE_URL') || define('BASE_URL', $protocol . $host  . '/gestion/');
 
 const HOST = "localhost";
 const USER = "root";
