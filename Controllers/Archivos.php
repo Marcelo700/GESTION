@@ -12,7 +12,7 @@ class Archivos extends Controller
             $_SESSION["nombre"] = $_COOKIE['nombre'];
             $_SESSION["correo"] = $_COOKIE['correo'];
         } else {
-            header("Location: http://localhost/gestion/");
+            header("Location: " . BASE_URL);
         }
         if (empty($_SESSION['id'])){
                 header('location: ' . BASE_URL);

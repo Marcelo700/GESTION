@@ -31,7 +31,7 @@ class Admin extends Controller
                 }
             }
         } else {
-            header("Location: http://localhost:80/gestion/");
+            header("Location: " . BASE_URL);
         }
     }
     public function index()

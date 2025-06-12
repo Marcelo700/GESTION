@@ -3,7 +3,7 @@ if (isset($_COOKIE['id'])) {
     $_SESSION["nombre"] = $_COOKIE['nombre'];
     $_SESSION["correo"] = $_COOKIE['correo'];
     $_SESSION["id"] = $_COOKIE['id'];
-    header("Location: http://localhost:80/gestion/admin");
+    header("Location: " . BASE_URL . "admin");
 }
 ?>
 
