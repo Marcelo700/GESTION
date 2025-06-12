@@ -117,6 +117,7 @@ class Admin extends Controller
         $data['menu'] = 'admin';
         $data['carpeta'] = $this->model->getCarpeta($id_carpeta);
         $data['shares'] = $this->model->verificarEstado($this->correo);
+        $data['script'] = 'file.js';
         $this->views->getView('admin', 'archivos', $data);
     }
 

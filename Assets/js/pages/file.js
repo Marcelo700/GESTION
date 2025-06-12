@@ -185,8 +185,14 @@ document.addEventListener('DOMContentLoaded', function () {
     eliminar.forEach(enlace => {
         enlace.addEventListener('click', function (e) {
             let id = e.target.getAttribute('data-id');
-            const url = base_url + 'archivos/eliminar/' + id;
-            eliminarRegistro('ESTA SEGURO DE ELIMINAR', 'EL ARCHIVO SE ELIMINARA DE FORMA PERMANENTE EN 30 DIAS', 'SI ELIMINAR', url, null)
+           
+            if (typeof eliminarRegistro !== 'function') {
+                console.error('eliminarRegistro no está definida');
+            } else {
+                const url = base_url + 'archivos/eliminar/' + id;
+                console.log('URL a eliminar:', url);
+                eliminarRegistro('ESTA SEGURO DE ELIMINAR', 'EL ARCHIVO SE ELIMINARA DE FORMA PERMANENTE EN 30 DIAS', 'SI ELIMINAR', url, null);
+            }
         })
     });
 
@@ -389,3 +395,20 @@ function desvincularEtiquetaCarpeta(id_relacion) {
 
 window.vincularEtiquetasACarpeta = vincularEtiquetasACarpeta;
 window.desvincularEtiquetaCarpeta = desvincularEtiquetaCarpeta;
+
+// ELIMINAR ARCHIVOS (delegación de eventos)
+document.addEventListener('click', function (e) {
+    console.log('Click eliminar', e.target);
+    if (e.target.classList.contains('eliminar')) {
+        e.preventDefault();
+        let id = e.target.getAttribute('data-id');
+        console.log('Click eliminar', id, e.target);
+        if (typeof eliminarRegistro !== 'function') {
+            console.error('eliminarRegistro no está definida');
+        } else {
+            const url = base_url + 'archivos/eliminar/' + id;
+            console.log('URL a eliminar:', url);
+            eliminarRegistro('ESTA SEGURO DE ELIMINAR', 'EL ARCHIVO SE ELIMINARA DE FORMA PERMANENTE EN 30 DIAS', 'SI ELIMINAR', url, null);
+        }
+    }
+});
