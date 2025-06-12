@@ -9,7 +9,7 @@ $host = $_SERVER['HTTP_HOST'];
 $port = $_SERVER['SERVER_PORT'];
 $port = ($port == '80' || $port == '443') ? '' : ':' . $port;
 
-// Construir la URL base
+
 define('BASE_URL', $protocol . $host  . '/gestion/');
 
 const HOST = "localhost";
