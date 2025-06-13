@@ -30,7 +30,7 @@
                             </div>
                         </div>
 
-                        <button type="button" class="btn btn-primary btn-burger mailbox-compose-btn" data-bs-toggle="modal" data-bs-target="#composeModal"><i class="material-icons-outlined">create</i></button>
+                        
                         <div class="card">
                             <div class="container-fluid">
                                 <div class="row">

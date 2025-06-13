@@ -95,13 +95,8 @@
                                 </li>
                                 <li class="nav-item dropdown hidden-on-mobile">
                                     <a class="nav-link dropdown-toggle" href="#" id="addDropdownLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="material-icons">add</i>
+                                        
                                     </a>
-                                    <ul class="dropdown-menu" aria-labelledby="addDropdownLink">
-                                        <li><a class="dropdown-item" href="#">New Workspace</a></li>
-                                        <li><a class="dropdown-item" href="#">New Board</a></li>
-                                        <li><a class="dropdown-item" href="#">Create Project</a></li>
-                                    </ul>
                                 </li>
                             </ul>
 
