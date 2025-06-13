@@ -158,3 +158,29 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Editar Carpeta -->
+<div id="modalEditarCarpeta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalEditarCarpetaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEditarCarpetaLabel">Editar Carpeta</h5>
+                <button class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <form id="frmEditarCarpeta" autocomplete="off">
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="editarCarpetaId">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="material-icons">folder</i>
+                        </span>
+                        <input class="form-control" type="text" name="nombre" id="editarCarpetaNombre" placeholder="Nuevo nombre">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

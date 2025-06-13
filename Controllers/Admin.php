@@ -117,7 +117,6 @@ class Admin extends Controller
         $data['menu'] = 'admin';
         $data['carpeta'] = $this->model->getCarpeta($id_carpeta);
         $data['shares'] = $this->model->verificarEstado($this->correo);
-        $data['script'] = 'file.js';
         $this->views->getView('admin', 'archivos', $data);
     }
 
@@ -149,6 +148,50 @@ class Admin extends Controller
             }
         }
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    public function editarCarpeta()
+    {
+        $id = $_POST['id'];
+        $nombre = $_POST['nombre'];
+        if (empty($nombre)) {
+            $res = array('tipo' => 'warning', 'mensaje' => 'EL NOMBRE ES REQUERIDO');
+        } else {
+            $verificarNom = $this->model->getVerificar('nombre', $nombre, $this->id_usuario, $id);
+            if (empty($verificarNom)) {
+                $data = $this->model->editarCarpeta($id, $nombre);
+                if ($data == 1) {
+                    $res = array('tipo' => 'success', 'mensaje' => 'CARPETA MODIFICADA');
+                } else {
+                    $res = array('tipo' => 'error', 'mensaje' => 'ERROR AL MODIFICAR');
+                }
+            } else {
+                $res = array('tipo' => 'error', 'mensaje' => 'YA EXISTE UNA CARPETA CON ESE NOMBRE');
+            }
+        }
+        echo json_encode($res, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    public function eliminarCarpeta()
+    {
+        $id = $_POST['id'];
+        // Verificar si la carpeta está vacía
+        require_once 'Models/archivosModel.php';
+        $archivosModel = new archivosModel();
+        $archivos = $archivosModel->getArchivosCarpeta($id);
+        if (count($archivos) > 0) {
+            $res = array('tipo' => 'error', 'mensaje' => 'NO SE PUEDE ELIMINAR: LA CARPETA TIENE ARCHIVOS');
+        } else {
+            $data = $this->model->eliminarCarpeta($id);
+            if ($data == 1) {
+                $res = array('tipo' => 'success', 'mensaje' => 'CARPETA ELIMINADA');
+            } else {
+                $res = array('tipo' => 'error', 'mensaje' => 'ERROR AL ELIMINAR');
+            }
+        }
+        echo json_encode($res, JSON_UNESCAPED_UNICODE);
         die();
     }
 }

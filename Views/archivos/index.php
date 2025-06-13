@@ -27,6 +27,10 @@
                                     <a href="#" id="<?php echo $carpeta['id']; ?>" class="file-manager-group-title carpetas"><?php echo $carpeta['nombre']; ?></a>
                                     <span class="file-manager-group-about"><?php echo $carpeta['fecha']; ?></span>
                                 </div>
+                                <div class="ms-2">
+                                    <button class="btn btn-sm btn-outline-secondary editar-carpeta" data-id="<?php echo $carpeta['id']; ?>" data-nombre="<?php echo htmlspecialchars($carpeta['nombre']); ?>" title="Editar"><i class="material-icons">edit</i></button>
+                                    <button class="btn btn-sm btn-outline-danger eliminar-carpeta" data-id="<?php echo $carpeta['id']; ?>" title="Eliminar"><i class="material-icons">delete</i></button>
+                                </div>
                             </div>
                         </div>
                     </div>

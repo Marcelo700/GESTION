@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
     eliminar.forEach(enlace => {
         enlace.addEventListener('click', function (e) {
             let id = e.target.getAttribute('data-id');
-           
+          
             if (typeof eliminarRegistro !== 'function') {
                 console.error('eliminarRegistro no está definida');
             } else {
@@ -398,7 +398,6 @@ window.desvincularEtiquetaCarpeta = desvincularEtiquetaCarpeta;
 
 // ELIMINAR ARCHIVOS (delegación de eventos)
 document.addEventListener('click', function (e) {
-    console.log('Click eliminar', e.target);
     if (e.target.classList.contains('eliminar')) {
         e.preventDefault();
         let id = e.target.getAttribute('data-id');
@@ -412,3 +411,62 @@ document.addEventListener('click', function (e) {
         }
     }
 });
+
+// --- Lógica para editar y eliminar carpetas ---
+document.addEventListener('click', function (e) {
+    // Editar carpeta
+    if (e.target.closest('.editar-carpeta')) {
+        const btn = e.target.closest('.editar-carpeta');
+        const id = btn.getAttribute('data-id');
+        const nombre = btn.getAttribute('data-nombre');
+        document.getElementById('editarCarpetaId').value = id;
+        document.getElementById('editarCarpetaNombre').value = nombre;
+        const modalEditar = new bootstrap.Modal(document.getElementById('modalEditarCarpeta'));
+        modalEditar.show();
+    }
+    // Eliminar carpeta
+    if (e.target.closest('.eliminar-carpeta')) {
+        const btn = e.target.closest('.eliminar-carpeta');
+        const id = btn.getAttribute('data-id');
+        Swal.fire({
+            title: '¿Eliminar carpeta?',
+            text: 'Solo se eliminará si está vacía.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const formData = new FormData();
+                formData.append('id', id);
+                fetch(base_url + 'admin/eliminarCarpeta', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(data => {
+                    Swal.fire({ icon: data.tipo, title: 'Aviso', text: data.mensaje, timer: 1500 });
+                    if (data.tipo === 'success') setTimeout(() => window.location.reload(), 1200);
+                });
+            }
+        });
+    }
+});
+
+// Guardar edición de carpeta
+const frmEditarCarpeta = document.getElementById('frmEditarCarpeta');
+if (frmEditarCarpeta) {
+    frmEditarCarpeta.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const formData = new FormData(frmEditarCarpeta);
+        fetch(base_url + 'admin/editarCarpeta', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            Swal.fire({ icon: data.tipo, title: 'Aviso', text: data.mensaje, timer: 1500 });
+            if (data.tipo === 'success') setTimeout(() => window.location.reload(), 1200);
+        });
+    });
+}

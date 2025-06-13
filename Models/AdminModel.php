@@ -105,6 +105,20 @@ class AdminModel extends Query
         return $this->save($sql, $datos);
 
     }
+
+    public function editarCarpeta($id, $nombre)
+    {
+        $sql = "UPDATE carpetas SET nombre = ? WHERE id = ?";
+        $datos = array($nombre, $id);
+        return $this->save($sql, $datos);
+    }
+
+    public function eliminarCarpeta($id)
+    {
+        $sql = "UPDATE carpetas SET estado = 0 WHERE id = ?";
+        $datos = array($id);
+        return $this->save($sql, $datos);
+    }
 }
 
 ?>
